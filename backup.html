@@ -56,6 +56,48 @@
         .scroll-down {
             cursor: pointer;
         }
+        
+        @media all and (min-width: 980px) {
+            /*********************************
+show, hide, and transition logos for primary and fixed nav;
+must have second logo in header.php file for this to work
+**********************************/
+            #logo {
+                opacity: 1;
+                display: inherit;
+                margin: 0 0 0 0;
+                -webkit-transition: all .4s ease-in-out;
+                -moz-transition: all .4s ease-in-out;
+                transition: all .4s ease-in-out;
+            }
+            #logo.second-logo {
+                opacity: 0;
+                margin: 0 0 -200px -130px;
+                -webkit-transition: all .4s ease-in-out;
+                -moz-transition: all .4s ease-in-out;
+                transition: all .4s ease-in-out;
+            }
+            .et-fixed-header #logo {
+                opacity: 0;
+                margin: -200px 0px 0 0px;
+                -webkit-transition: all .4s ease-in-out;
+                -moz-transition: all .4s ease-in-out;
+                transition: all .4s ease-in-out;
+            }
+            .et-fixed-header #logo.second-logo {
+                opacity: 1;
+                margin: 0 0 0 -90px !important;
+                -webkit-transition: all .4s ease-in-out;
+                -moz-transition: all .4s ease-in-out;
+                transition: all .4s ease-in-out;
+            }
+            /*********************************
+hides overflow on header container so logo doesn't show outsite header on transition
+*********************************/
+            #main-header {
+                overflow: hidden;
+            }
+        }
     </style>
     <script type="text/javascript" class="silex-script">
         function fullHeight() {
@@ -940,6 +982,8 @@ $(function() {
 
 
 
+
+
     <style id="current-page-style">
         .page-home {
             display: inherit;
@@ -947,6 +991,14 @@ $(function() {
     </style>
     <!-- Silex HEAD tag do not remove -->
     <script src="https://cdn.jsdelivr.net/scrollreveal.js/3.2.0/scrollreveal.min.js"></script>
+
+    <a href="<?php echo esc_url( home_url( '/' ) ); ?>">
+<img src="<?php echo esc_attr( $logo ); ?>" alt="<?php echo esc_attr( get_bloginfo( 'name' ) ); ?>" id="logo" data-height-percentage="<?php echo esc_attr( et_get_option( 'logo_height', '54' ) ); ?>" />
+</a>
+
+    <a href="<?php echo esc_url( home_url( '/' ) ); ?>">
+<img src="INSERT NEW LOGO IMAGE URL" alt="<?php echo esc_attr( get_bloginfo( 'name' ) ); ?>" id="logo" class="second-logo" data-height-percentage="<?php echo esc_attr( et_get_option( 'logo_height', '54' ) ); ?>" />
+</a>
     <!-- End of Silex HEAD tag do not remove -->
 </head>
 
@@ -1202,7 +1254,8 @@ $(function() {
                         create derivative works from it, distribute it, and allow others to do so on our behalf. You grant us irrevocable, world-wide, perpetual, non-exclusive, royalty-free, transferable rights to use Your Content, in part or in whole,
                         for any purpose. We may or may not use Your Content and will decide whether to do so at our sole discretion. Submitting Your Content to us is no guarantee that it will used.<br><br>When displaying Your Content, we may elect to
                         include your first name and last initial as was provided to us in your Your Content, EG: Jane D. We may also include the name of the state that you indicated in Your Content, depending on the medium in which we are displaying Your
-                        Content.</font>
+                        Content.
+                    </font>
                 </div>
             </div>
 
@@ -1231,7 +1284,8 @@ $(function() {
                         create derivative works from it, distribute it, and allow others to do so on our behalf. You grant us irrevocable, world-wide, perpetual, non-exclusive, royalty-free, transferable rights to use Your Content, in part or in whole,
                         for any purpose. We may or may not use Your Content and will decide whether to do so at our sole discretion. Submitting Your Content to us is no guarantee that it will used.<br><br>When displaying Your Content, we may elect to
                         include your first name and last initial as was provided to us in your Your Content, EG: Jane D. We may also include the name of the state that you indicated in Your Content, depending on the medium in which we are displaying Your
-                        Content.</font>
+                        Content.
+                    </font>
                 </div>
             </div>
 
@@ -1427,6 +1481,8 @@ $(function() {
                 be responsible for any lost, incorrect, or exposed data.<br>If you feel that this site is not following its stated information policy, you may contact us.</font>
         </div>
     </div>
+
+
 
 
 </body>
