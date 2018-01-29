@@ -1028,20 +1028,22 @@ $(function() {
 
                     <a class="navbar-brand" href="/">Home</a>
                 </div>
-
                 <div id="navbar" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-                        <li><a href="#!page-cua">Content User Agreement</a>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Profile <span class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="#!page-cua">Content User Agreement</a>
+                                </li>
+                                <li><a href="#!page-privacy-policy">Privacy Policy</a>
+                                </li>
+                                <li><a href="#!page-terms-and-conditions">Terms and Conditions of Use</a>
+                                </li>
+                            </ul>
                         </li>
-                        <li><a href="#!page-privacy-policy">Privacy Policy</a>
-                        </li>
-                        <li><a href="#!page-terms-and-conditions">Terms and Conditions of Use</a>
-                        </li>
-                    </ul>
-                    </li>
 
-                    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-                    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+                        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+                        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
     </body>
 
     </html>
