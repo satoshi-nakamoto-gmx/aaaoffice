@@ -56,27 +56,6 @@
         .scroll-down {
             cursor: pointer;
         }
-        
-        .Header {
-            background: #fff;
-            /*Make the background white*/
-            position: fixed;
-            /*fix the position of entire header*/
-            left: 0;
-            right: 0;
-            z-index: 9999;
-            /*place in front of other elements*/
-        }
-        
-        .Header--top {
-            top: 0;
-            /*top header at top*/
-        }
-        
-        .Header--bottom {
-            top: 100px;
-            /*bottom header below it */
-        }
     </style>
     <script type="text/javascript" class="silex-script">
         function fullHeight() {
@@ -132,6 +111,97 @@ $(function() {
         sr.reveal('.from-bottom', { origin:  'bottom'});
     }
 })
+        /*
+         * active menu widget for Silex
+         * create an element which links to an anchor, e.g. an element with a link to #anchor1
+         * add the css class "anchor-link" to this element
+         * create an element which is the anchor, e.g. an element with the css class "anchor1"
+         * when the user clicks on the link, the scroll slides until the element is visible
+         * when the user slides and the element is visible, the link gets a css class "active-menu"
+         */
+        $(function() {
+            var navSectionHeight = $('.nav-section').height();
+            // Cache selectors
+            var lastId,
+                // All list items
+                menuItems = $(".anchor-link"),
+                // Anchors corresponding to menu items
+                // find the name of the elements which are anchors
+                scrollItems = menuItems.map(function(){
+                    // the names are in the href attribute of the anchor links
+                    var attr = $(this).attr("data-silex-href") || $(this).attr("href");
+                    // case of a link in text field or an external link after publish
+                    $(this).find("[href]").each(function() {
+                        attr = $(this).attr("href");
+                    });
+                    // case of an "external link" before publish
+                    $(this).find("[data-silex-href]").each(function() {
+                        attr = $(this).attr("href");
+                    });
+                    // the links to anchors are expected to start with #
+                    if(attr && attr.indexOf("#") === 0) {
+                        var name = attr.substring(attr.lastIndexOf("#") + 1);
+                        // exclude page names (#!page-)
+                        if(name.indexOf("!page") !== 0) {
+                            var item = $("." + name);
+                            // check if there is a hash in the URL to scroll to the anchor at start
+                            if(window.location.hash.indexOf("#" + name) > 0) {
+                                var offsetTop = item.offset().top;
+                                $('html, body').stop().animate({
+                                    scrollTop: offsetTop - navSectionHeight
+                                }, 300);
+                            }
+                            // now find the element itself, which has the name as a css class
+                            if (item.length) { 
+                                return {
+                                    "link": this,
+                                    "item": item.get(0)
+                                };
+                            }
+                        }
+                    }
+                });
+            // Bind click handler to menu items
+            // so we can get a fancy scroll animation
+            scrollItems.each(function() {
+                var link = this.link;
+                var item = this.item;
+                $(link).click(function(e){
+                    // leave time for the page to open
+                    // and then scroll
+                    setTimeout(function() {
+                      var offsetTop = $(item).offset().top;
+                      $('html, body').stop().animate({
+                          scrollTop: offsetTop - navSectionHeight
+                      }, 300);
+                      e.preventDefault();
+                    }, 100);
+                });
+            })
+        
+            // Bind to scroll
+            $(window).scroll(function(){
+               // Get container scroll position
+               var fromTop = $(this).scrollTop();
+               // Get id of current scroll item
+               var cur = scrollItems.map(function(){
+                 if ($(this.item).offset().top <= fromTop + navSectionHeight)
+                   return this;
+               });
+               // add the css class on the current menu item
+        /*       if(fromTop < navSectionHeight) {
+                   $('.nav-section').removeClass('invisible');
+               }
+        */       $(".active-menu").removeClass("active-menu");
+               if(cur.length > 0) {
+                   cur = cur[cur.length-1];
+                   $(cur.link).addClass("active-menu");
+        /*           if(fromTop > navSectionHeight) {
+                       $('.nav-section').addClass('invisible');
+                   }
+        */       }
+            });
+        });
     </script>
     <style class="silex-inline-styles" type="text/css">
         .body-initial {
@@ -835,7 +905,7 @@ $(function() {
 
 
     <meta name="description" content="A minority woman owned small business in Washington and we are focused on providing best customer experience we possibly can.">
-    <link href="AAA-Logo%20(Translucent).png" rel="shortcut icon">
+    <link href="../../../../../../../AAA-Logo%20(Translucent).png" rel="shortcut icon">
 
     <meta name="twitter:title" content="Smart &amp; Simple">
     <meta name="og:title" content="Smart &amp; Simple">
@@ -848,6 +918,8 @@ $(function() {
 
     <meta name="twitter:image" content="http://smart-simple.netlify.com/smart-simple/screenshot.png">
     <meta name="og:image" content="http://smart-simple.netlify.com/smart-simple/screenshot.png">
+
+
 
 
 
@@ -882,8 +954,7 @@ $(function() {
     <div class="silex-pages">
 
         <a id="page-home" data-silex-type="page" class="page-element page-link-active">home</a><a id="page-cua" data-silex-type="page" class="page-element">cua</a><a id="page-privacy-policy" data-silex-type="page" class="page-element">privacy-policy</a>
-        <a
-            id="page-terms-and-conditions" data-silex-type="page" class="page-element">terms-and-conditions</a>
+        <a id="page-terms-and-conditions" data-silex-type="page" class="page-element">terms-and-conditions</a>
     </div>
 
 
@@ -993,8 +1064,7 @@ $(function() {
                 <div data-silex-type="image" class="editable-style silex-id-1484576238553-4 image-element from-left page-link-active" data-silex-id="silex-id-1484576238553-4" data-silex-href="#!page-home" style=""><img src="company-contact.png" class="silex-element-content"></div>
             </div>
             <div data-silex-type="image" class="editable-style silex-id-1484655890366-24 image-element from-bottom scroll-down hero-bottom" data-silex-id="silex-id-1484655890366-24" style=""><img src="../../../../../../../libs/templates/silex-templates/smart-simple/assets/scroll.png" class="silex-element-content"></div>
-            <div data-silex-type="image" class="editable-style image-element from-right silex-id-1517247622044-16" data-silex-id="silex-id-1517247622044-16"
-                style=""><img src="AAA-Logo%20(Translucent)%202.png" class="silex-element-content"></div>
+            <div data-silex-type="image" class="editable-style image-element from-right silex-id-1517247622044-16" data-silex-id="silex-id-1517247622044-16" style=""><img src="AAA-Logo%20(Translucent)%202.png" class="silex-element-content"></div>
         </div>
     </div>
     <div data-silex-type="container" class="prevent-draggable container-element editable-style silex-id-1484587463012-11 section-element fold page-home paged-element" data-silex-id="silex-id-1484587463012-11">
@@ -1126,12 +1196,13 @@ $(function() {
                     <font size="2">When filling out certain forms on this site, you may be asked whether you would like your rating/review/comments "to be public". If you check the box, thereby indicating that you would like your rating, review, and comments to be public,
                         you are agreeing to be bound by the following terms, in addition the others appearing on this page:<br><br>"Your Content" refers to your name, location, product rating, comments, product review, and other information that you submit
                         to us as part of forms on this website.<br><br>You are responsible for the entirety of Your Content, and once published, it may not always be able to be withdrawn. You assume all risks associated with Your Content and agree to
-                        hold<br>Fruitful Properties harmless in all situations that may arise pertaining to Your Content.<br><br>You grant us the right to publicly and privately use Your Content, in part and in whole, in any medium that we may choose.
-                        This may include, but is not limited to, including Your Content on our websites, social networks accounts, flyers, catalogs, images, videos, and emails. You also acknowledge that we may reformat Your Content, incorporate it into
-                        advertisements, create derivative works from it, distribute it, and allow others to do so on our behalf. You grant us irrevocable, world-wide, perpetual, non-exclusive, royalty-free, transferable rights to use Your Content, in
-                        part or in whole, for any purpose. We may or may not use Your Content and will decide whether to do so at our sole discretion. Submitting Your Content to us is no guarantee that it will used.<br><br>When displaying Your Content,
-                        we may elect to include your first name and last initial as was provided to us in your Your Content, EG: Jane D. We may also include the name of the state that you indicated in Your Content, depending on the medium in which we
-                        are displaying Your Content.</font>
+                        hold
+                        <br>Fruitful Properties harmless in all situations that may arise pertaining to Your Content.<br><br>You grant us the right to publicly and privately use Your Content, in part and in whole, in any medium that we may choose. This
+                        may include, but is not limited to, including Your Content on our websites, social networks accounts, flyers, catalogs, images, videos, and emails. You also acknowledge that we may reformat Your Content, incorporate it into advertisements,
+                        create derivative works from it, distribute it, and allow others to do so on our behalf. You grant us irrevocable, world-wide, perpetual, non-exclusive, royalty-free, transferable rights to use Your Content, in part or in whole,
+                        for any purpose. We may or may not use Your Content and will decide whether to do so at our sole discretion. Submitting Your Content to us is no guarantee that it will used.<br><br>When displaying Your Content, we may elect to
+                        include your first name and last initial as was provided to us in your Your Content, EG: Jane D. We may also include the name of the state that you indicated in Your Content, depending on the medium in which we are displaying Your
+                        Content.</font>
                 </div>
             </div>
 
@@ -1154,12 +1225,13 @@ $(function() {
                     <font size="2">When filling out certain forms on this site, you may be asked whether you would like your rating/review/comments "to be public". If you check the box, thereby indicating that you would like your rating, review, and comments to be public,
                         you are agreeing to be bound by the following terms, in addition the others appearing on this page:<br><br>"Your Content" refers to your name, location, product rating, comments, product review, and other information that you submit
                         to us as part of forms on this website.<br><br>You are responsible for the entirety of Your Content, and once published, it may not always be able to be withdrawn. You assume all risks associated with Your Content and agree to
-                        hold<br>Fruitful Properties harmless in all situations that may arise pertaining to Your Content.<br><br>You grant us the right to publicly and privately use Your Content, in part and in whole, in any medium that we may choose.
-                        This may include, but is not limited to, including Your Content on our websites, social networks accounts, flyers, catalogs, images, videos, and emails. You also acknowledge that we may reformat Your Content, incorporate it into
-                        advertisements, create derivative works from it, distribute it, and allow others to do so on our behalf. You grant us irrevocable, world-wide, perpetual, non-exclusive, royalty-free, transferable rights to use Your Content, in
-                        part or in whole, for any purpose. We may or may not use Your Content and will decide whether to do so at our sole discretion. Submitting Your Content to us is no guarantee that it will used.<br><br>When displaying Your Content,
-                        we may elect to include your first name and last initial as was provided to us in your Your Content, EG: Jane D. We may also include the name of the state that you indicated in Your Content, depending on the medium in which we
-                        are displaying Your Content.</font>
+                        hold
+                        <br>Fruitful Properties harmless in all situations that may arise pertaining to Your Content.<br><br>You grant us the right to publicly and privately use Your Content, in part and in whole, in any medium that we may choose. This
+                        may include, but is not limited to, including Your Content on our websites, social networks accounts, flyers, catalogs, images, videos, and emails. You also acknowledge that we may reformat Your Content, incorporate it into advertisements,
+                        create derivative works from it, distribute it, and allow others to do so on our behalf. You grant us irrevocable, world-wide, perpetual, non-exclusive, royalty-free, transferable rights to use Your Content, in part or in whole,
+                        for any purpose. We may or may not use Your Content and will decide whether to do so at our sole discretion. Submitting Your Content to us is no guarantee that it will used.<br><br>When displaying Your Content, we may elect to
+                        include your first name and last initial as was provided to us in your Your Content, EG: Jane D. We may also include the name of the state that you indicated in Your Content, depending on the medium in which we are displaying Your
+                        Content.</font>
                 </div>
             </div>
 
@@ -1346,13 +1418,17 @@ $(function() {
                 that consumers add to their shopping cart, record user-specific information on what pages users access or visit, record past activity at a site in order to provide better service when visitors return to our site. Information stored in
                 cookies will never be made available to any third party individual or organizations for any reason.<br>If you do not want to receive e-mail from us in the future, please let us know by sending us e-mail, calling us, or writing to us using
                 the information listed on our contact page.<br>If you supply us with your postal address online you will only receive the information for which you provided us your address. You may request that we stop mailing information to you by contacting
-                us.<br>With respect to Ad Servers: We do not partner with or have special relationships with any ad server companies.<br>From time to time, we may use customer information for new, unanticipated uses not previously disclosed in our privacy
+                us.
+                <br>With respect to Ad Servers: We do not partner with or have special relationships with any ad server companies.<br>From time to time, we may use customer information for new, unanticipated uses not previously disclosed in our privacy
                 notice. If our information practices change at some time in the future we will post the policy changes to our Web site to notify you of these changes. If you are concerned about how your information is used, you should check back at our
                 Web site periodically.<br>For security reasons, we do not provide site visitors with access to information we have collected and that we maintain about them except to correct their profile information, such as mailing address, phone numbers,
-                etc.<br>With respect to security: We have appropriate security measures in place in our physical facilities to protect against the loss, misuse or alteration of information that we have collected from you at our site. However, we will
-                not be responsible for any lost, incorrect, or exposed data.<br>If you feel that this site is not following its stated information policy, you may contact us.</font>
+                etc.
+                <br>With respect to security: We have appropriate security measures in place in our physical facilities to protect against the loss, misuse or alteration of information that we have collected from you at our site. However, we will not
+                be responsible for any lost, incorrect, or exposed data.<br>If you feel that this site is not following its stated information policy, you may contact us.</font>
         </div>
     </div>
+
+
 </body>
 
 </html>
