@@ -56,6 +56,48 @@
         .scroll-down {
             cursor: pointer;
         }
+        
+        @media all and (min-width: 980px) {
+            /*********************************
+show, hide, and transition logos for primary and fixed nav;
+must have second logo in header.php file for this to work
+**********************************/
+            #logo {
+                opacity: 1;
+                display: inherit;
+                margin: 0 0 0 0;
+                -webkit-transition: all .4s ease-in-out;
+                -moz-transition: all .4s ease-in-out;
+                transition: all .4s ease-in-out;
+            }
+            #logo.second-logo {
+                opacity: 0;
+                margin: 0 0 -200px -130px;
+                -webkit-transition: all .4s ease-in-out;
+                -moz-transition: all .4s ease-in-out;
+                transition: all .4s ease-in-out;
+            }
+            .et-fixed-header #logo {
+                opacity: 0;
+                margin: -200px 0px 0 0px;
+                -webkit-transition: all .4s ease-in-out;
+                -moz-transition: all .4s ease-in-out;
+                transition: all .4s ease-in-out;
+            }
+            .et-fixed-header #logo.second-logo {
+                opacity: 1;
+                margin: 0 0 0 -90px !important;
+                -webkit-transition: all .4s ease-in-out;
+                -moz-transition: all .4s ease-in-out;
+                transition: all .4s ease-in-out;
+            }
+            /*********************************
+hides overflow on header container so logo doesn't show outsite header on transition
+*********************************/
+            #main-header {
+                overflow: hidden;
+            }
+        }
     </style>
     <script type="text/javascript" class="silex-script">
         function fullHeight() {
