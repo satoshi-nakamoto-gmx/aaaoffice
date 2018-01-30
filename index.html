@@ -116,25 +116,6 @@ hides overflow on header container so logo doesn't show outsite header on transi
         footer {
             padding: 30px 0;
         }
-        
-        @import url('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css');
-        /* To mantain the navbar at the bottom*/
-        
-        header {
-            width: 100%;
-            min-height: calc(100vh - 52px);
-        }
-        /* To mantain the navbar at the top once it is affixed */
-        
-        .affix {
-            top: 0;
-            width: 100%;
-        }
-        /* Padding for a smoth affix */
-        
-        .affix+.container-fluid {
-            padding-top: 72px;
-        }
     </style>
     <script type="text/javascript" class="silex-script">
         function fullHeight() {
@@ -281,37 +262,6 @@ $(function() {
         */       }
             });
         });
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        $(function(){
-    $('.navbar').affix({
-      offset: {
-        /* Affix the navbar after scroll below header */
-        top: $("header").outerHeight(true)}
-    });
-});
     </script>
     <style class="silex-inline-styles" type="text/css">
         .body-initial {
@@ -1580,23 +1530,7 @@ $(function() {
 
 
     <div data-silex-type="html" class="editable-style silex-id-1517335418919-0 html-element page-home paged-element" data-silex-id="silex-id-1517335418919-0">
-        <div class="silex-element-content">
-            <nav class="navbar navbar-default">
-                <div class="container">
-                    <div class="navbar-header">
-                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-        <span class="sr-only">Toggle Navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-                        <a href="index.html&quot;https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js&quot;">
-                            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-                        </a>
-                    </div>
-                </div>
-            </nav>
-        </div>
+        <div class="silex-element-content"></div>
     </div>
 </body>
 
