@@ -136,7 +136,7 @@ hides overflow on header container so logo doesn't show outsite header on transi
             $('.hero-centered').each(function() {
                 var minHeight = $(this).css('min-height');
                 $(this).css({
-                    'top': '50%',
+                    'top': '70%',
                     'margin-top': Math.round(-parseInt(minHeight) / 2) + 'px'
                 });
             });
@@ -164,7 +164,7 @@ var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.
 $(function() {
     if(!isMobile) {
         window.sr = ScrollReveal({
-            distance: '120px'
+            distance: '140px'
         });
         sr.reveal('.from-left', { origin:  'left'});
         sr.reveal('.from-right', { origin:  'right'});
@@ -236,7 +236,7 @@ $(function() {
                           scrollTop: offsetTop - navSectionHeight
                       }, 300);
                       e.preventDefault();
-                    }, 100);
+                    }, 140);
                 });
             })
         
