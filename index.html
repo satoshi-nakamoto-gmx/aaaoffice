@@ -136,8 +136,8 @@ hides overflow on header container so logo doesn't show outsite header on transi
             $('.hero-centered').each(function() {
                 var minHeight = $(this).css('min-height');
                 $(this).css({
-                    'top': '100%',
-                    'margin-top': Math.round(-parseInt(minHeight) / 2) + 'px'
+                    'top': '50%',
+                    'margin-top': Math.round(-parseInt(minHeight) / 5) + 'px'
                 });
             });
         }
@@ -210,7 +210,7 @@ $(function() {
                                 var offsetTop = item.offset().top;
                                 $('html, body').stop().animate({
                                     scrollTop: offsetTop - navSectionHeight
-                                }, 900);
+                                }, 300);
                             }
                             // now find the element itself, which has the name as a css class
                             if (item.length) { 
@@ -234,7 +234,7 @@ $(function() {
                       var offsetTop = $(item).offset().top;
                       $('html, body').stop().animate({
                           scrollTop: offsetTop - navSectionHeight
-                      }, 900);
+                      }, 300);
                       e.preventDefault();
                     }, 100);
                 });
