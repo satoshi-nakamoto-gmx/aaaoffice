@@ -1,0 +1,2213 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+
+
+    <meta name="generator" content="Silex v2.2.7">
+
+    <script type="text/javascript" src="//editor.silex.me/static/2.7/jquery.js" data-silex-static=""></script>
+    <script type="text/javascript" src="//editor.silex.me/static/2.7/jquery-ui.js" data-silex-static=""></script>
+    <script type="text/javascript" src="//editor.silex.me/static/2.7/pageable.js" data-silex-static=""></script>
+    <script type="text/javascript" src="//editor.silex.me/static/2.7/front-end.js" data-silex-static=""></script>
+    <link rel="stylesheet" href="//editor.silex.me/static/2.7/normalize.css" data-silex-static="">
+    <link rel="stylesheet" href="//editor.silex.me/static/2.7/front-end.css" data-silex-static="">
+    <style type="text/css" class="silex-style">
+        div.hero-bottom {
+            top: auto;
+            bottom: 30px;
+        }
+        
+        body {
+            font-family: arial, sans-serif;
+            font-size: 19px;
+            padding: 0 !important;
+            /* no white spoace at the top in mobile */
+        }
+        
+        h1 {
+            font-size: 70px;
+            font-weight: 100;
+            line-height: .8;
+        }
+        
+        h2 {
+            font-size: 25px;
+            font-weight: 100;
+            line-height: 1.5;
+        }
+        
+        .bg-grad {
+            background: #82c2ed;
+            background: -moz-linear-gradient(-45deg, #82c2ed 0, #a381ee 100%);
+            background: -webkit-linear-gradient(-45deg, #82c2ed 0, #a381ee 100%);
+            background: linear-gradient(135deg, #82c2ed 0, #a381ee 100%);
+        }
+        
+        .bg-grad2 {
+            background: #8adbdb;
+            background: -moz-linear-gradient(-45deg, #8adbdb 0, #344e9b 100%);
+            background: -webkit-linear-gradient(-45deg, #8adbdb 0, #344e9b 100%);
+            background: linear-gradient(135deg, #8adbdb 0, #344e9b 100%);
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#8adbdb', endColorstr='#344e9b', GradientType=1);
+        }
+        
+        .scroll-down {
+            cursor: pointer;
+        }
+        
+        @media all and (min-width: 980px) {
+            /*********************************
+show, hide, and transition logos for primary and fixed nav;
+must have second logo in header.php file for this to work
+**********************************/
+            #logo {
+                opacity: 1;
+                display: inherit;
+                margin: 0 0 0 0;
+                -webkit-transition: all .4s ease-in-out;
+                -moz-transition: all .4s ease-in-out;
+                transition: all .4s ease-in-out;
+            }
+            #logo.second-logo {
+                opacity: 0;
+                margin: 0 0 -200px -130px;
+                -webkit-transition: all .4s ease-in-out;
+                -moz-transition: all .4s ease-in-out;
+                transition: all .4s ease-in-out;
+            }
+            .et-fixed-header #logo {
+                opacity: 0;
+                margin: -200px 0px 0 0px;
+                -webkit-transition: all .4s ease-in-out;
+                -moz-transition: all .4s ease-in-out;
+                transition: all .4s ease-in-out;
+            }
+            .et-fixed-header #logo.second-logo {
+                opacity: 1;
+                margin: 0 0 0 -90px !important;
+                -webkit-transition: all .4s ease-in-out;
+                -moz-transition: all .4s ease-in-out;
+                transition: all .4s ease-in-out;
+            }
+            /*********************************
+hides overflow on header container so logo doesn't show outsite header on transition
+*********************************/
+            #main-header {
+                overflow: hidden;
+            }
+        }
+        /*
+* Style tweaks
+* --------------------------------------------------
+*/
+        
+        html,
+        body {
+            overflow-x: hidden;
+            /* Prevent scroll on narrow devices */
+        }
+        
+        body {
+            padding-top: 100px;
+        }
+        
+        footer {
+            padding: 30px 0;
+        }
+        /* END */
+    </style>
+    <script type="text/javascript" class="silex-script">
+        function fullHeight() {
+            var RATIO = 1; // 3/4
+            if($(window).width() < 480) return;
+            $('.hero').each(function() {
+                // get section content (for sections only)
+                var sectionContent = $(this).find('.silex-element-content');
+                // if this is a section, get its content container's min-height and apply it to the section
+                // so that the section has a minimum height
+                var minHeight = sectionContent.length ? sectionContent.css('min-height') : '';
+                $(this).css({
+                    'height': $(window).height()*RATIO,
+                    'min-height': minHeight
+                });
+            });
+            $('.hero-centered').each(function() {
+                var minHeight = $(this).css('min-height');
+                $(this).css({
+                    'top': '50%',
+                    'margin-top': Math.round(-parseInt(minHeight) / 2) + 'px'
+                });
+            });
+        }
+        $(window).resize(fullHeight);
+        $(window).ready(fullHeight);
+    $(window).ready(function() {
+        $('.scroll-down').click(function() {
+            var container = $('html,body'),
+            scrollTo = $('.fold');
+        container.animate({
+            scrollTop: scrollTo.offset().top - container.offset().top + container.scrollTop()
+        });
+        });
+    });
+    
+    
+    
+    
+var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+
+/*
+ * animation widget from here: https://github.com/silexlabs/Silex/issues/443
+ */
+$(function() {
+    if(!isMobile) {
+        window.sr = ScrollReveal({
+            distance: '100px'
+        });
+        sr.reveal('.from-left', { origin:  'left'});
+        sr.reveal('.from-right', { origin:  'right'});
+        sr.reveal('.from-top', { origin:  'top'});
+        sr.reveal('.from-bottom', { origin:  'bottom'});
+    }
+})
+        /*
+         * active menu widget for Silex
+         * create an element which links to an anchor, e.g. an element with a link to #anchor1
+         * add the css class "anchor-link" to this element
+         * create an element which is the anchor, e.g. an element with the css class "anchor1"
+         * when the user clicks on the link, the scroll slides until the element is visible
+         * when the user slides and the element is visible, the link gets a css class "active-menu"
+         */
+        $(function() {
+            var navSectionHeight = $('.nav-section').height();
+            // Cache selectors
+            var lastId,
+                // All list items
+                menuItems = $(".anchor-link"),
+                // Anchors corresponding to menu items
+                // find the name of the elements which are anchors
+                scrollItems = menuItems.map(function(){
+                    // the names are in the href attribute of the anchor links
+                    var attr = $(this).attr("data-silex-href") || $(this).attr("href");
+                    // case of a link in text field or an external link after publish
+                    $(this).find("[href]").each(function() {
+                        attr = $(this).attr("href");
+                    });
+                    // case of an "external link" before publish
+                    $(this).find("[data-silex-href]").each(function() {
+                        attr = $(this).attr("href");
+                    });
+                    // the links to anchors are expected to start with #
+                    if(attr && attr.indexOf("#") === 0) {
+                        var name = attr.substring(attr.lastIndexOf("#") + 1);
+                        // exclude page names (#!page-)
+                        if(name.indexOf("!page") !== 0) {
+                            var item = $("." + name);
+                            // check if there is a hash in the URL to scroll to the anchor at start
+                            if(window.location.hash.indexOf("#" + name) > 0) {
+                                var offsetTop = item.offset().top;
+                                $('html, body').stop().animate({
+                                    scrollTop: offsetTop - navSectionHeight
+                                }, 300);
+                            }
+                            // now find the element itself, which has the name as a css class
+                            if (item.length) { 
+                                return {
+                                    "link": this,
+                                    "item": item.get(0)
+                                };
+                            }
+                        }
+                    }
+                });
+            // Bind click handler to menu items
+            // so we can get a fancy scroll animation
+            scrollItems.each(function() {
+                var link = this.link;
+                var item = this.item;
+                $(link).click(function(e){
+                    // leave time for the page to open
+                    // and then scroll
+                    setTimeout(function() {
+                      var offsetTop = $(item).offset().top;
+                      $('html, body').stop().animate({
+                          scrollTop: offsetTop - navSectionHeight
+                      }, 300);
+                      e.preventDefault();
+                    }, 100);
+                });
+            })
+        
+            // Bind to scroll
+            $(window).scroll(function(){
+               // Get container scroll position
+               var fromTop = $(this).scrollTop();
+               // Get id of current scroll item
+               var cur = scrollItems.map(function(){
+                 if ($(this.item).offset().top <= fromTop + navSectionHeight)
+                   return this;
+               });
+               // add the css class on the current menu item
+        /*       if(fromTop < navSectionHeight) {
+                   $('.nav-section').removeClass('invisible');
+               }
+        */       $(".active-menu").removeClass("active-menu");
+               if(cur.length > 0) {
+                   cur = cur[cur.length-1];
+                   $(cur.link).addClass("active-menu");
+        /*           if(fromTop > navSectionHeight) {
+                       $('.nav-section').addClass('invisible');
+                   }
+        */       }
+            });
+        });
+    </script>
+    <style class="silex-inline-styles" type="text/css">
+        .body-initial {
+            background-color: rgba(255, 255, 255, 1);
+            min-height: 20px;
+        }
+        
+        .silex-id-1517243908568-6 {
+            top: 100px;
+            left: NaNpx;
+            background-color: transparent;
+        }
+        
+        .silex-id-1517243908569-7 {
+            min-height: 325px;
+            background-color: transparent;
+        }
+        
+        .silex-id-1484576338732-6 {
+            min-height: 270px;
+            width: 515px;
+            background-color: transparent;
+            top: 36px;
+            left: 493px;
+        }
+        
+        @media only screen and (max-width: 480px),
+        only screen and (max-device-width: 480px) {
+            .silex-id-1484576338732-6 {
+                top: 354px;
+                left: 11px;
+                width: 423px;
+                min-height: 372px;
+            }
+        }
+        
+        .silex-id-1484575683599-3 {
+            min-height: 150px;
+            width: 649px;
+            top: 65px;
+            left: -30px;
+        }
+        
+        @media only screen and (max-width: 480px),
+        only screen and (max-device-width: 480px) {
+            .silex-id-1484575683599-3 {
+                top: 16px;
+                left: 11px;
+                width: 401px;
+                min-height: 267px;
+            }
+        }
+        
+        .silex-id-1484576238553-4 {
+            min-height: 50px;
+            width: 772px;
+            top: -10px;
+            left: -31px;
+        }
+        
+        .silex-id-1484655890366-24 {
+            min-height: 32px;
+            width: 30px;
+            top: 848px;
+            left: 509px;
+        }
+        
+        .silex-id-1517247622044-16 {
+            min-height: 280px;
+            width: 400px;
+            top: 21px;
+            left: -30px;
+        }
+        
+        .silex-id-1517252247173-20 {
+            top: 1513px;
+            left: NaNpx;
+            background-color: rgba(245, 245, 245, 1);
+            border-color: #000000;
+        }
+        
+        .silex-id-1517252247173-21 {
+            min-height: 522px;
+            background-color: transparent;
+        }
+        
+        .silex-id-1517252247173-22 {
+            min-height: 256px;
+            width: 256px;
+            top: 104px;
+            left: -151px;
+        }
+        
+        .silex-id-1517252247174-23 {
+            min-height: 506px;
+            width: 950px;
+            top: 0px;
+            left: 120px;
+            border-color: #000000;
+        }
+        
+        @media only screen and (max-width: 480px),
+        only screen and (max-device-width: 480px) {
+            .silex-id-1517252247174-23 {
+                top: 279px;
+                left: 11px;
+                width: 423px;
+                min-height: 189px;
+            }
+        }
+        
+        .silex-id-1484590211530-22 {
+            top: 1000px;
+            left: 0px;
+            background-color: rgba(245, 245, 245, 1);
+            border-color: #000000;
+        }
+        
+        @media only screen and (max-width: 480px),
+        only screen and (max-device-width: 480px) {
+            .silex-id-1484590211530-22 {
+                top: 1346px;
+                left: 0px;
+            }
+        }
+        
+        .silex-id-1484590211529-21 {
+            min-height: 560px;
+            background-color: transparent;
+        }
+        
+        @media only screen and (max-width: 480px),
+        only screen and (max-device-width: 480px) {
+            .silex-id-1484590211529-21 {
+                min-height: 670px;
+            }
+        }
+        
+        .silex-id-1517415711891-8 {
+            height: 569px;
+            width: 100%;
+            top: 10px;
+            left: 0px;
+            allign: center;
+            background-color: transparent;
+            border-color: #000000;
+            min-height: 292px;
+            border-width: 2px 0 0 0;
+            border-style: outset;
+        }
+        
+        .silex-id-1484587463012-11 {
+            top: 825px;
+            left: 5px;
+        }
+        
+        .silex-id-1484587463012-10 {
+            min-height: 590px;
+            background-color: transparent;
+        }
+        
+        .silex-id-1484589897940-17 {
+            min-height: 500px;
+            width: 700px;
+            top: 85px;
+            left: 464px;
+        }
+        
+        @media only screen and (max-width: 480px),
+        only screen and (max-device-width: 480px) {
+            .silex-id-1484589897940-17 {
+                top: 269px;
+                left: 12px;
+                width: 58px;
+                min-height: 58px;
+            }
+        }
+        
+        .silex-id-1484589600542-14 {
+            min-height: 79px;
+            width: 330px;
+            top: 128px;
+            left: -119px;
+        }
+        
+        @media only screen and (max-width: 480px),
+        only screen and (max-device-width: 480px) {
+            .silex-id-1484589600542-14 {
+                top: 2px;
+                left: 11px;
+                width: 423px;
+                min-height: 115px;
+            }
+        }
+        
+        .silex-id-1517419834899-9 {
+            min-height: 117px;
+            width: 413px;
+            top: 170px;
+            left: -119px;
+        }
+        
+        @media only screen and (max-width: 480px),
+        only screen and (max-device-width: 480px) {
+            .silex-id-1517419834899-9 {
+                top: 2px;
+                left: 11px;
+                width: 423px;
+                min-height: 115px;
+            }
+        }
+        
+        .silex-id-1517419921416-10 {
+            min-height: 117px;
+            width: 390px;
+            top: 210px;
+            left: -119px;
+        }
+        
+        @media only screen and (max-width: 480px),
+        only screen and (max-device-width: 480px) {
+            .silex-id-1517419921416-10 {
+                top: 2px;
+                left: 11px;
+                width: 423px;
+                min-height: 115px;
+            }
+        }
+        
+        .silex-id-1517421413044-12 {
+            min-height: 79px;
+            width: 516px;
+            top: 403px;
+            left: -119px;
+        }
+        
+        @media only screen and (max-width: 480px),
+        only screen and (max-device-width: 480px) {
+            .silex-id-1517421413044-12 {
+                top: 2px;
+                left: 11px;
+                width: 423px;
+                min-height: 115px;
+            }
+        }
+        
+        .silex-id-1517421443759-13 {
+            min-height: 117px;
+            width: 553px;
+            top: 484px;
+            left: -119px;
+        }
+        
+        @media only screen and (max-width: 480px),
+        only screen and (max-device-width: 480px) {
+            .silex-id-1517421443759-13 {
+                top: 2px;
+                left: 11px;
+                width: 423px;
+                min-height: 115px;
+            }
+        }
+        
+        .silex-id-1517421500036-14 {
+            min-height: 117px;
+            width: 439px;
+            top: 358px;
+            left: -119px;
+        }
+        
+        @media only screen and (max-width: 480px),
+        only screen and (max-device-width: 480px) {
+            .silex-id-1517421500036-14 {
+                top: 2px;
+                left: 11px;
+                width: 423px;
+                min-height: 115px;
+            }
+        }
+        
+        .silex-id-1517421681021-15 {
+            min-height: 79px;
+            width: 504px;
+            top: 442px;
+            left: -119px;
+        }
+        
+        @media only screen and (max-width: 480px),
+        only screen and (max-device-width: 480px) {
+            .silex-id-1517421681021-15 {
+                top: 2px;
+                left: 11px;
+                width: 423px;
+                min-height: 115px;
+            }
+        }
+        
+        .silex-id-1517424105657-17 {
+            width: 319px;
+            background-color: transparent;
+            min-height: 33px;
+            top: 318px;
+            left: -39px;
+            border-width: 2px 0 0 0;
+            border-style: outset;
+        }
+        
+        .silex-id-1484658633791-29 {
+            top: 1598px;
+            left: 0px;
+            min-width: 1000px;
+        }
+        
+        @media only screen and (max-width: 480px),
+        only screen and (max-device-width: 480px) {
+            .silex-id-1484658633791-29 {
+                top: 2016px;
+                left: 0px;
+            }
+        }
+        
+        .silex-id-1484658633790-28 {
+            min-height: 1160px;
+            background-color: transparent;
+            top: 15px;
+            left: 295px;
+            width: 1000px;
+        }
+        
+        @media only screen and (max-width: 480px),
+        only screen and (max-device-width: 480px) {
+            .silex-id-1484658633790-28 {
+                min-height: 1425px;
+            }
+        }
+        
+        .silex-id-1484658906426-31 {
+            min-height: 372px;
+            width: 672px;
+            top: 15px;
+            left: 0px;
+        }
+        
+        .silex-id-1484659675199-32 {
+            min-height: 189px;
+            width: 308px;
+            top: 87px;
+            left: 692px;
+            border-color: #000000;
+        }
+        
+        @media only screen and (max-width: 480px),
+        only screen and (max-device-width: 480px) {
+            .silex-id-1484659675199-32 {
+                top: 0px;
+                left: 12px;
+                width: 421px;
+                min-height: 189px;
+            }
+        }
+        
+        .silex-id-1484659675214-33 {
+            min-height: 63px;
+            width: 192px;
+            top: 277px;
+            left: 693px;
+            border-radius: 6px 6px 6px 6px;
+            border-color: #000000;
+            background-color: rgba(245, 245, 245, 1);
+        }
+        
+        .silex-id-1484659915267-34 {
+            min-height: 400px;
+            width: 500px;
+            top: 567px;
+            left: 500px;
+        }
+        
+        .silex-id-1484659957952-35 {
+            min-height: 189px;
+            width: 355px;
+            top: 605px;
+            left: 0px;
+            border-color: #000000;
+        }
+        
+        @media only screen and (max-width: 480px),
+        only screen and (max-device-width: 480px) {
+            .silex-id-1484659957952-35 {
+                top: 921px;
+                left: 11px;
+                width: 423px;
+                min-height: 189px;
+            }
+        }
+        
+        .silex-id-1484659957955-36 {
+            min-height: 63px;
+            width: 192px;
+            top: 795px;
+            left: 0px;
+            border-radius: 6px 6px 6px 6px;
+            border-color: #000000;
+            background-color: rgba(245, 245, 245, 1);
+        }
+        
+        .silex-id-1484660025157-38 {
+            top: 2758px;
+            left: 0px;
+            border-color: #000000;
+        }
+        
+        @media only screen and (max-width: 480px),
+        only screen and (max-device-width: 480px) {
+            .silex-id-1484660025157-38 {
+                top: 3297px;
+                left: 0px;
+            }
+        }
+        
+        .silex-id-1484660025157-37 {
+            min-height: 620px;
+            background-color: transparent;
+            border-color: #000000;
+        }
+        
+        @media only screen and (max-width: 480px),
+        only screen and (max-device-width: 480px) {
+            .silex-id-1484660025157-37 {
+                min-height: 1205px;
+            }
+        }
+        
+        .silex-id-1484660819078-52 {
+            min-height: 460px;
+            width: 686px;
+            top: -16px;
+            left: 0px;
+            border-color: #000000;
+        }
+        
+        .silex-id-1484661186677-53 {
+            min-height: 63px;
+            width: 192px;
+            top: 420px;
+            left: 0px;
+            border-width: 1px 1px 1px 1px;
+            border-style: solid;
+            border-radius: 6px 6px 6px 6px;
+            border-color: #ffffff;
+            background-color: transparent;
+        }
+        
+        .silex-id-1484660331538-40 {
+            min-height: 520px;
+            width: 580px;
+            top: 209px;
+            left: 622px;
+        }
+        
+        .silex-id-1517408522228-0 {
+            top: 670px;
+            left: NaNpx;
+            background-color: rgba(245, 245, 245, 1);
+            border-color: #000000;
+        }
+        
+        .silex-id-1517408522228-1 {
+            min-height: 1231px;
+            background-color: transparent;
+        }
+        
+        .silex-id-1517408522228-2 {
+            min-height: 256px;
+            width: 256px;
+            top: 104px;
+            left: -231px;
+        }
+        
+        .silex-id-1517408522229-3 {
+            min-height: 462px;
+            width: 1092px;
+            top: 6px;
+            left: 72px;
+            border-color: #000000;
+        }
+        
+        @media only screen and (max-width: 480px),
+        only screen and (max-device-width: 480px) {
+            .silex-id-1517408522229-3 {
+                top: 279px;
+                left: 11px;
+                width: 423px;
+                min-height: 189px;
+            }
+        }
+        
+        .silex-id-1517408522231-4 {
+            min-height: 1225px;
+            width: 954px;
+            top: 0px;
+            left: 120px;
+            border-color: #000000;
+        }
+        
+        @media only screen and (max-width: 480px),
+        only screen and (max-device-width: 480px) {
+            .silex-id-1517408522231-4 {
+                top: 279px;
+                left: 11px;
+                width: 423px;
+                min-height: 189px;
+            }
+        }
+        
+        .silex-id-1517408959857-6 {
+            min-height: 256px;
+            width: 256px;
+            top: 104px;
+            left: -150px;
+        }
+        
+        .silex-id-1517253019317-26 {
+            top: 556px;
+            left: NaNpx;
+            background-color: rgba(245, 245, 245, 1);
+            border-color: #000000;
+        }
+        
+        .silex-id-1517253019317-27 {
+            min-height: 707px;
+            background-color: transparent;
+        }
+        
+        .silex-id-1517253019317-28 {
+            min-height: 256px;
+            width: 256px;
+            top: 104px;
+            left: -151px;
+        }
+        
+        .silex-id-1517253019318-29 {
+            min-height: 462px;
+            width: 1092px;
+            top: 6px;
+            left: 72px;
+            border-color: #000000;
+        }
+        
+        @media only screen and (max-width: 480px),
+        only screen and (max-device-width: 480px) {
+            .silex-id-1517253019318-29 {
+                top: 279px;
+                left: 11px;
+                width: 423px;
+                min-height: 189px;
+            }
+        }
+        
+        .silex-id-1517253050286-30 {
+            min-height: 698px;
+            width: 973px;
+            top: 0px;
+            left: 120px;
+            border-color: #000000;
+        }
+        
+        @media only screen and (max-width: 480px),
+        only screen and (max-device-width: 480px) {
+            .silex-id-1517253050286-30 {
+                top: 279px;
+                left: 11px;
+                width: 423px;
+                min-height: 189px;
+            }
+        }
+        
+        .silex-id-1517408921880-5 {
+            min-height: 256px;
+            width: 256px;
+            top: 104px;
+            left: -231px;
+        }
+        
+        .silex-id-1484662129693-59 {
+            top: 4282px;
+            left: 0px;
+            background-color: rgba(245, 245, 245, 1);
+            border-color: #000000;
+        }
+        
+        .silex-id-1484662129693-60 {
+            min-height: 280px;
+            background-color: transparent;
+        }
+        
+        .silex-id-1484662129693-61 {
+            min-height: 189px;
+            width: 353px;
+            top: 60px;
+            left: 700px;
+        }
+        
+        @media only screen and (max-width: 480px),
+        only screen and (max-device-width: 480px) {
+            .silex-id-1484662129693-61 {
+                top: 279px;
+                left: 11px;
+                width: 423px;
+                min-height: 189px;
+            }
+        }
+        
+        .silex-id-1517429870751-0 {
+            min-height: 189px;
+            width: 353px;
+            top: 60px;
+            left: 150px;
+            border-color: #000000;
+        }
+        
+        @media only screen and (max-width: 480px),
+        only screen and (max-device-width: 480px) {
+            .silex-id-1517429870751-0 {
+                top: 279px;
+                left: 11px;
+                width: 423px;
+                min-height: 189px;
+            }
+        }
+        
+        .silex-id-1517430051371-1 {
+            width: 405px;
+            min-height: 51px;
+            top: 8px;
+            left: 51px;
+        }
+        
+        .silex-id-1517430432628-2 {
+            width: 150px;
+            min-height: 150px;
+            top: 80px;
+            left: 0px;
+        }
+        
+        .silex-id-1517430456045-3 {
+            width: 150px;
+            min-height: 150px;
+            top: 80px;
+            left: 546px;
+        }
+        
+        .silex-id-1484661251321-55 {
+            top: 3478px;
+            left: 0px;
+            border-width: 3px 0 3px 0;
+            border-style: outset;
+            border-radius: 0 4px 4px 0;
+        }
+        
+        @media only screen and (max-width: 480px),
+        only screen and (max-device-width: 480px) {
+            .silex-id-1484661251321-55 {
+                top: 4669px;
+                left: 0px;
+            }
+        }
+        
+        .silex-id-1484661251321-54 {
+            min-height: 804px;
+            background-color: transparent;
+        }
+        
+        @media only screen and (max-width: 480px),
+        only screen and (max-device-width: 480px) {
+            .silex-id-1484661251321-54 {
+                min-height: 582px;
+            }
+        }
+        
+        .silex-id-1517251452419-18 {
+            width: 800px;
+            background-color: transparent;
+            min-height: 610px;
+            top: 138px;
+            left: -128px;
+        }
+        
+        .silex-id-1517252019236-19 {
+            width: 351px;
+            min-height: 58px;
+            top: 38px;
+            left: 11px;
+        }
+        
+        .silex-id-1517252377183-25 {
+            width: 475px;
+            height: 448px;
+            background-color: transparent;
+            top: 183px;
+            left: 707px;
+        }
+        
+        .silex-id-1517420430878-11 {
+            width: 385px;
+            min-height: 58px;
+            top: 646px;
+            left: 753px;
+        }
+        
+        .silex-id-1484662096460-58 {
+            top: 4646px;
+            left: 0px;
+        }
+        
+        .silex-id-1484662096459-57 {
+            min-height: 480px;
+            background-color: transparent;
+        }
+        
+        .silex-id-1484662183052-64 {
+            min-height: 450px;
+            width: 990px;
+            background-color: transparent;
+            top: 20px;
+            left: 5px;
+        }
+        
+        .silex-id-1484662183053-65 {
+            min-height: 40px;
+            width: 255px;
+            top: -10px;
+            left: 140px;
+        }
+        
+        .silex-id-1517245757822-12 {
+            min-height: 76px;
+            width: 294px;
+            top: -10px;
+            left: 582px;
+        }
+        
+        .silex-id-1517246334547-15 {
+            min-height: 73px;
+            width: 281px;
+            top: 37px;
+            left: 140px;
+        }
+        
+        .silex-id-1517424312388-18 {
+            min-height: 38px;
+            width: 302px;
+            top: 210px;
+            left: 345px;
+        }
+        
+        .silex-id-1517424543465-20 {
+            width: 150px;
+            min-height: 40px;
+            top: 280px;
+            left: 127px;
+            opacity: 0.7;
+        }
+        
+        .silex-id-1517424678689-21 {
+            width: 250px;
+            min-height: 70px;
+            top: 274px;
+            left: 376px;
+            opacity: 0.7;
+        }
+        
+        .silex-id-1517424844842-22 {
+            width: 200px;
+            min-height: 130px;
+            top: 237px;
+            left: 695px;
+            opacity: 0.7;
+        }
+        
+        .silex-id-1517425442137-23 {
+            min-height: 73px;
+            width: 281px;
+            top: 37px;
+            left: 582px;
+        }
+        
+        .silex-id-1517426174305-0 {
+            width: 416px;
+            min-height: 76px;
+            background-color: transparent;
+            top: 385px;
+            left: 281px;
+        }
+        
+        .silex-id-1517426289424-1 {
+            min-height: 38px;
+            width: 302px;
+            top: 371px;
+            left: 340px;
+        }
+        
+        .silex-id-1478366450713-3 {
+            top: 5061px;
+            left: 0px;
+            background-color: rgba(82, 82, 82, 1);
+        }
+        
+        .silex-id-1478366450713-2 {
+            min-height: 62px;
+            background-color: transparent;
+            width: 1200px;
+        }
+        
+        .silex-id-1442914737143-3 {
+            min-height: 62px;
+            width: 471px;
+            top: -1px;
+            left: 258px;
+        }
+        
+        @media only screen and (max-width: 480px),
+        only screen and (max-device-width: 480px) {
+            .silex-id-1442914737143-3 {
+                top: 57px;
+                left: 11px;
+                width: 423px;
+                min-height: 105px;
+            }
+        }
+    </style>
+    <title>AAA Office Supplies Inc.</title>
+    <script type="text/javascript" class="silex-json-styles">
+        [{"desktop":{"body-initial":{"background-color":"rgba(255,255,255,1)","min-height":"20px"},"silex-id-1474394621032-2":{"min-height":"669px","background-color":"transparent","width":"1200px"},"silex-id-1474394605264-1":{"min-height":"100px","width":"100px","top":"100px","left":"100px"},"silex-id-1474394605263-0":{"min-height":"100px","background-color":"transparent"},"silex-id-1442914737143-3":{"min-height":"62px","width":"471px","top":"-1px","left":"258px"},"silex-id-1478366444112-0":{"min-height":"100px","background-color":"transparent","width":"1200px"},"silex-id-1478366450713-2":{"min-height":"62px","background-color":"transparent","width":"1200px"},"silex-id-1478366450713-3":{"top":"5061px","left":"0px","background-color":"rgba(82,82,82,1)"},"silex-id-1484575683599-3":{"min-height":"150px","width":"649px","top":"65px","left":"-30px"},"silex-id-1484576238553-4":{"min-height":"50px","width":"772px","top":"-10px","left":"-31px"},"silex-id-1484576338732-6":{"min-height":"270px","width":"515px","background-color":"transparent","top":"36px","left":"493px"},"silex-id-1484587463012-10":{"min-height":"590px","background-color":"transparent"},"silex-id-1484587463012-11":{"top":"825px","left":"5px"},"silex-id-1484589600542-14":{"min-height":"79px","width":"330px","top":"128px","left":"-119px"},"silex-id-1484589897940-17":{"min-height":"500px","width":"700px","top":"85px","left":"464px"},"silex-id-1484590211529-21":{"min-height":"560px","background-color":"transparent"},"silex-id-1484590211530-22":{"top":"1000px","left":"0px","background-color":"rgba(245,245,245,1)","border-color":"#000000"},"silex-id-1484655890366-24":{"min-height":"32px","width":"30px","top":"848px","left":"509px"},"silex-id-1484658633790-28":{"min-height":"1160px","background-color":"transparent","top":"15px","left":"295px","width":"1000px"},"silex-id-1484658633791-29":{"top":"1598px","left":"0px","min-width":"1000px"},"silex-id-1484658906426-31":{"min-height":"372px","width":"672px","top":"15px","left":"0px"},"silex-id-1484659675199-32":{"min-height":"189px","width":"308px","top":"87px","left":"692px","border-color":"#000000"},"silex-id-1484659675214-33":{"min-height":"63px","width":"192px","top":"277px","left":"693px","border-width":"","border-style":"","border-radius":"6px 6px 6px 6px ","border-color":"#000000","background-color":"rgba(245,245,245,1)"},"silex-id-1484659915267-34":{"min-height":"400px","width":"500px","top":"567px","left":"500px"},"silex-id-1484659957952-35":{"min-height":"189px","width":"355px","top":"605px","left":"0px","border-color":"#000000"},"silex-id-1484659957955-36":{"min-height":"63px","width":"192px","top":"795px","left":"0px","border-width":"","border-style":"","border-radius":"6px 6px 6px 6px ","border-color":"#000000","background-color":"rgba(245,245,245,1)"},"silex-id-1484660025157-37":{"min-height":"620px","background-color":"transparent","border-color":"#000000"},"silex-id-1484660025157-38":{"top":"2758px","left":"0px","border-color":"#000000"},"silex-id-1484660331538-40":{"min-height":"520px","width":"580px","top":"209px","left":"622px"},"silex-id-1484660819078-52":{"min-height":"460px","width":"686px","top":"-16px","left":"0px","border-color":"#000000"},"silex-id-1484661186677-53":{"min-height":"63px","width":"192px","top":"420px","left":"0px","border-width":"1px 1px 1px 1px ","border-style":"solid","border-radius":"6px 6px 6px 6px ","border-color":"#ffffff","background-color":"transparent"},"silex-id-1484661251321-54":{"min-height":"804px","background-color":"transparent"},"silex-id-1484661251321-55":{"top":"3478px","left":"0px","border-width":"3px 0 3px 0 ","border-style":"outset","border-radius":"0 4px 4px 0 "},"silex-id-1484662096459-57":{"min-height":"480px","background-color":"transparent"},"silex-id-1484662096460-58":{"top":"4646px","left":"0px"},"silex-id-1484662129693-59":{"top":"4282px","left":"0px","background-color":"rgba(245,245,245,1)","border-color":"#000000"},"silex-id-1484662129693-60":{"min-height":"280px","background-color":"transparent"},"silex-id-1484662129693-61":{"min-height":"189px","width":"353px","top":"60px","left":"700px"},"silex-id-1484662183052-64":{"min-height":"450px","width":"990px","background-color":"transparent","top":"20px","left":"5px"},"silex-id-1484662183053-65":{"min-height":"40px","width":"255px","top":"-10px","left":"140px"},"silex-id-1517243891417-3":{"min-height":"39px","width":"590px","top":"126px","left":"-339px"},"silex-id-1517243891419-4":{"min-height":"43px","width":"158px","top":"126px","left":"268px"},"silex-id-1517243891421-5":{"min-height":"83px","width":"494px","top":"9px","left":"11px"},"silex-id-1517243891417-2":{"min-height":"192px","width":"515px","background-color":"transparent","top":"120px","left":"258px"},"silex-id-1517243891417-1":{"min-height":"415px","background-color":"transparent"},"silex-id-1517243908569-9":{"min-height":"39px","width":"590px","top":"126px","left":"-339px"},"silex-id-1517243908569-10":{"min-height":"43px","width":"158px","top":"126px","left":"268px"},"silex-id-1517243908570-11":{"min-height":"83px","width":"494px","top":"9px","left":"11px"},"silex-id-1517243908569-7":{"min-height":"325px","background-color":"transparent"},"silex-id-1517243908568-6":{"top":"100px","left":"NaNpx","opacity":"","background-color":"transparent"},"silex-id-1517245757822-12":{"min-height":"76px","width":"294px","top":"-10px","left":"582px"},"silex-id-1517246334547-15":{"min-height":"73px","width":"281px","top":"37px","left":"140px"},"silex-id-1517247622044-16":{"min-height":"280px","width":"400px","top":"21px","left":"-30px"},"silex-id-1517251452419-18":{"width":"800px","background-color":"transparent","min-height":"610px","top":"138px","left":"-128px"},"silex-id-1517252019236-19":{"width":"351px","min-height":"58px","top":"38px","left":"11px"},"silex-id-1517252247173-22":{"min-height":"256px","width":"256px","top":"104px","left":"-151px"},"silex-id-1517252247174-23":{"min-height":"506px","width":"950px","top":"0px","left":"120px","border-color":"#000000"},"silex-id-1517252247173-21":{"min-height":"522px","background-color":"transparent"},"silex-id-1517252247173-20":{"top":"1513px","left":"NaNpx","background-color":"rgba(245,245,245,1)","border-color":"#000000"},"silex-id-1517252377183-25":{"width":"475px","height":"448px","background-color":"transparent","top":"183px","left":"707px"},"silex-id-1517253019317-28":{"min-height":"256px","width":"256px","top":"104px","left":"-151px"},"silex-id-1517253019318-29":{"min-height":"462px","width":"1092px","top":"6px","left":"72px","border-color":"#000000"},"silex-id-1517253019317-27":{"min-height":"707px","background-color":"transparent"},"silex-id-1517253019317-26":{"top":"556px","left":"NaNpx","background-color":"rgba(245,245,245,1)","border-color":"#000000"},"silex-id-1517253050286-30":{"min-height":"698px","width":"973px","top":"0px","left":"120px","border-color":"#000000"},"silex-id-1517257443612-34":{"min-height":"45px","background-color":"transparent"},"silex-id-1517257492980-37":{"width":"100px","background-color":"transparent","min-height":"100px","top":"-17px","left":"461px"},"silex-id-1517408522228-2":{"min-height":"256px","width":"256px","top":"104px","left":"-231px"},"silex-id-1517408522229-3":{"min-height":"462px","width":"1092px","top":"6px","left":"72px","border-color":"#000000"},"silex-id-1517408522231-4":{"min-height":"1225px","width":"954px","top":"0px","left":"120px","border-color":"#000000"},"silex-id-1517408522228-1":{"min-height":"1231px","background-color":"transparent"},"silex-id-1517408522228-0":{"top":"670px","left":"NaNpx","background-color":"rgba(245,245,245,1)","border-color":"#000000"},"silex-id-1517408921880-5":{"min-height":"256px","width":"256px","top":"104px","left":"-231px"},"silex-id-1517408959857-6":{"min-height":"256px","width":"256px","top":"104px","left":"-150px"},"silex-id-1517415711891-8":{"height":"569px","width":"100%","top":"10px","left":"0px","allign":"center","background-color":"transparent","border-color":"#000000","min-height":"292px","border-width":"2px 0 0 0","border-style":"outset"},"silex-id-1517419834899-9":{"min-height":"117px","width":"413px","top":"170px","left":"-119px"},"silex-id-1517419921416-10":{"min-height":"117px","width":"390px","top":"210px","left":"-119px"},"silex-id-1517420430878-11":{"width":"385px","min-height":"58px","top":"646px","left":"753px"},"silex-id-1517421413044-12":{"min-height":"79px","width":"516px","top":"403px","left":"-119px"},"silex-id-1517421443759-13":{"min-height":"117px","width":"553px","top":"484px","left":"-119px"},"silex-id-1517421500036-14":{"min-height":"117px","width":"439px","top":"358px","left":"-119px"},"silex-id-1517421681021-15":{"min-height":"79px","width":"504px","top":"442px","left":"-119px"},"silex-id-1517424105657-17":{"width":"319px","background-color":"transparent","min-height":"33px","top":"318px","left":"-39px","border-width":"2px 0 0 0 ","border-style":"outset"},"silex-id-1517424312388-18":{"min-height":"38px","width":"302px","top":"210px","left":"345px"},"silex-id-1517424543465-20":{"width":"150px","min-height":"40px","top":"280px","left":"127px","border-radius":"","opacity":"0.7"},"silex-id-1517424678689-21":{"width":"250px","min-height":"70px","top":"274px","left":"376px","border-radius":"","opacity":"0.7"},"silex-id-1517424844842-22":{"width":"200px","min-height":"130px","top":"237px","left":"695px","border-radius":"","opacity":"0.7"},"silex-id-1517425442137-23":{"min-height":"73px","width":"281px","top":"37px","left":"582px"},"silex-id-1517426174305-0":{"width":"416px","min-height":"76px","background-color":"transparent","top":"385px","left":"281px"},"silex-id-1517426289424-1":{"min-height":"38px","width":"302px","top":"371px","left":"340px"},"silex-id-1517429870751-0":{"min-height":"189px","width":"353px","top":"60px","left":"150px","border-color":"#000000"},"silex-id-1517430051371-1":{"width":"405px","min-height":"51px","top":"8px","left":"51px"},"silex-id-1517430432628-2":{"width":"150px","min-height":"150px","top":"80px","left":"0px"},"silex-id-1517430456045-3":{"width":"150px","min-height":"150px","top":"80px","left":"546px"}},"mobile":{"silex-id-1484575683599-3":{"top":"16px","left":"11px","width":"401px","min-height":"267px"},"silex-id-1474394621032-2":{"min-height":"871px"},"silex-id-1484576338732-6":{"top":"354px","left":"11px","width":"423px","min-height":"372px"},"silex-id-1484589600542-14":{"top":"2px","left":"11px","width":"423px","min-height":"115px"},"silex-id-1484659675199-32":{"top":"0px","left":"12px","width":"421px","min-height":"189px"},"silex-id-1484590211530-22":{"top":"1346px","left":"0px"},"silex-id-1484590211529-21":{"min-height":"670px"},"silex-id-1484659957952-35":{"top":"921px","left":"11px","width":"423px","min-height":"189px"},"silex-id-1484658633791-29":{"top":"2016px","left":"0px"},"silex-id-1484658633790-28":{"min-height":"1425px"},"silex-id-1484661251321-55":{"top":"4669px","left":"0px"},"silex-id-1484661251321-54":{"min-height":"582px"},"silex-id-1484662129693-61":{"top":"279px","left":"11px","width":"423px","min-height":"189px"},"silex-id-1442914737143-3":{"top":"57px","left":"11px","width":"423px","min-height":"105px"},"silex-id-1484589897940-17":{"top":"269px","left":"12px","width":"58px","min-height":"58px"},"silex-id-1484660025157-38":{"top":"3297px","left":"0px"},"silex-id-1484660025157-37":{"min-height":"1205px"},"silex-id-1517252247174-23":{"top":"279px","left":"11px","width":"423px","min-height":"189px"},"silex-id-1517253019318-29":{"top":"279px","left":"11px","width":"423px","min-height":"189px"},"silex-id-1517253050286-30":{"top":"279px","left":"11px","width":"423px","min-height":"189px"},"silex-id-1517408522229-3":{"top":"279px","left":"11px","width":"423px","min-height":"189px"},"silex-id-1517408522231-4":{"top":"279px","left":"11px","width":"423px","min-height":"189px"},"silex-id-1517419834899-9":{"top":"2px","left":"11px","width":"423px","min-height":"115px"},"silex-id-1517419921416-10":{"top":"2px","left":"11px","width":"423px","min-height":"115px"},"silex-id-1517421413044-12":{"top":"2px","left":"11px","width":"423px","min-height":"115px"},"silex-id-1517421443759-13":{"top":"2px","left":"11px","width":"423px","min-height":"115px"},"silex-id-1517421500036-14":{"top":"2px","left":"11px","width":"423px","min-height":"115px"},"silex-id-1517421681021-15":{"top":"2px","left":"11px","width":"423px","min-height":"115px"},"silex-id-1517429870751-0":{"top":"279px","left":"11px","width":"423px","min-height":"189px"}},"componentData":{"silex-id-1517252377183-25":{"name":"form1","templateName":"form","sendTo":"sales@aaaofficesupplies.com","buttonBorderColor":"#4caf50","buttonBackgroundColor":"#ff6262"},"silex-id-1517415711891-8":{"name":"slideshow1","templateName":"slideshow","slides":[{"image":[{"url":"/api/1.0/github/exec/get/aaaoffice/web/categories/t1.jpg","name":"t1.jpg","size":106689}],"text":"Toners & Cartridge"},{"image":[{"url":"/api/1.0/github/exec/get/aaaoffice/web/categories/t2.jpg","name":"t2.jpg","size":131902}],"text":"Technology\nSoftware and Hardware"},{"image":[{"url":"/api/1.0/github/exec/get/aaaoffice/web/categories/t3.jpg","name":"t3.jpg","size":150364}],"text":"Facility & Breakroom"},{"image":[{"url":"/api/1.0/github/exec/get/aaaoffice/web/categories/t4.jpg","name":"t4.jpg","size":221491}],"text":"Furniture"}],"autoplay":true,"animation":"fade","speed":"700"},"silex-id-1517426174305-0":{"name":"share1","templateName":"share","style":"Simple Icons","url":"https://www.aaaofficesupplies.com","title":"AAA Office Supplies Inc.","description":"is a minority woman owned small business in Washington\nand we are focused on providing best customer experience we possibly can.","twitter":""}}}]
+    </script>
+
+
+    <meta name="website-width" content="1000">
+    <style type="text/css" class="silex-style-settings">
+        .website-width {
+            width: 1000px;
+        }
+    </style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <meta name="description" content="A minority woman owned small business in Washington and we are focused on providing best customer experience we possibly can.">
+    <link href="https://www.aaaofficesupplies.com/assets/favicon.ico" rel="shortcut icon">
+
+    <meta name="twitter:title" content="AAA Office Supplies Inc.">
+    <meta name="og:title" content="AAA Office Supplies Inc.">
+    <meta name="twitter:description" content="A minority woman owned small business in Washington and we are focused on providing best customer experience we possibly can.">
+    <meta name="og:description" content="A minority woman owned small business in Washington and we are focused on providing best customer experience we possibly can.">
+    <meta name="twitter:site" content="silexlabs">
+    <meta name="publicationPath" content="/api/1.0/ftp/exec/put/httpdocs">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <script src="//editor.silex.me/static/2.7/unslider/unslider-min.js" data-silex-static="" data-dependency=""></script>
+    <link rel="stylesheet" href="//editor.silex.me/static/2.7/unslider/unslider.css" data-silex-static="" data-dependency="">
+
+
+
+
+
+
+
+
+
+
+    <meta name="twitter:card" content="summary">
+    <style id="current-page-style">
+        .page-home {
+            display: inherit;
+        }
+    </style>
+    <!-- Silex HEAD tag do not remove -->
+    <meta name="og:url" content="https://store.aaaofficesupplies.com/" />
+    <meta name="og:url" content="https://www.aaaofficesupplies.com/" />
+    <meta name="og:image" content="https://store.aaaofficesupplies.com/assets/AAALogo.bmp" />
+    <meta name="og:image" content="https://www.aaaofficesupplies.com/assets/AAALogo.bmp" />
+    <script src="https://cdn.jsdelivr.net/scrollreveal.js/3.2.0/scrollreveal.min.js"></script>
+
+    <!-- End of Silex HEAD tag do not remove -->
+</head>
+
+<body data-silex-id="body-initial" class="body-initial silex-runtime" data-silex-type="container">
+    <div class="silex-pages">
+
+        <a id="page-home" data-silex-type="page" class="page-element page-link-active">home</a><a id="page-cua" data-silex-type="page" class="page-element">cua</a><a id="page-privacy-policy" data-silex-type="page" class="page-element">privacy-policy</a>
+        <a id="page-terms-and-conditions" data-silex-type="page" class="page-element">terms-and-conditions</a>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div data-silex-type="container" class="prevent-draggable container-element editable-style section-element bg-grad2 silex-id-1517243908568-6" data-silex-id="silex-id-1517243908568-6">
+        <div data-silex-type="container" class="editable-style silex-element-content website-width silex-container-content container-element prevent-draggable silex-id-1517243908569-7" data-silex-id="silex-id-1517243908569-7">
+
+            <div data-silex-type="container" class="editable-style silex-id-1484576338732-6 container-element hero-centered" data-silex-id="silex-id-1484576338732-6" style="">
+                <div data-silex-type="text" class="editable-style silex-id-1484575683599-3 text-element" data-silex-id="silex-id-1484575683599-3" style="">
+                    <div class="silex-element-content normal">
+                        <h2 class="heading2">
+                            <font size="6"><span style="color: rgb(255, 255, 255);">AAA Office Supplies Inc.</span></font>
+                        </h2><span style="color: rgb(255, 255, 255);">is a minority woman owned small business in Woodinville, Washington<br>and we are focused on providing best customer experience we possibly can.</span></div>
+                </div>
+
+
+
+                <div data-silex-type="image" class="editable-style silex-id-1484576238553-4 image-element from-left page-link-active" data-silex-id="silex-id-1484576238553-4" data-silex-href="#!page-home" style=""><img src="company-contact.png" class="silex-element-content"></div>
+            </div>
+            <div data-silex-type="image" class="editable-style silex-id-1484655890366-24 image-element from-bottom scroll-down hero-bottom" data-silex-id="silex-id-1484655890366-24" style=""><img src="../../../../../../../libs/templates/silex-templates/smart-simple/assets/scroll.png" class="silex-element-content"></div>
+            <div data-silex-type="image" class="editable-style image-element from-right silex-id-1517247622044-16 page-link-active" data-silex-id="silex-id-1517247622044-16" style="" data-silex-href="#!page-home"><img src="AAA-Logo%20(Translucent)%202.png" class="silex-element-content"></div>
+        </div>
+    </div>
+    <div data-silex-type="container" class="prevent-draggable container-element editable-style section-element silex-id-1517252247173-20 page-cua paged-element" data-silex-id="silex-id-1517252247173-20">
+
+        <div data-silex-type="container" class="editable-style silex-element-content website-width silex-container-content container-element prevent-draggable silex-id-1517252247173-21" data-silex-id="silex-id-1517252247173-21">
+
+
+
+
+
+
+            <div data-silex-type="image" class="editable-style image-element from-left silex-id-1517252247173-22 page-cua paged-element" data-silex-id="silex-id-1517252247173-22" style=""><img src="handshake-flat.png" class="silex-element-content"></div>
+            <div data-silex-type="text" class="editable-style text-element from-right silex-id-1517252247174-23 page-cua paged-element" data-silex-id="silex-id-1517252247174-23" style="">
+                <div class="silex-element-content normal">
+                    <h1 class="page-heading" style="box-sizing: border-box; font-size: 29px; margin: 0px 0px 20px; font-weight: 500; line-height: 1.1; color: rgb(51, 51, 51); padding: 10px; background-color: rgb(245, 245, 245); border-bottom: 1px solid rgb(214, 212, 212); font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; letter-spacing: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-style: initial; text-decoration-color: initial;"><span style="font-family: arial, sans-serif;">Content Usage Agreement</span></h1>
+                    <h2 class="heading2"><span style="line-height: 1.5;"></span></h2>
+                    <font size="2">When filling out certain forms on this site, you may be asked whether you would like your rating/review/comments "to be public". If you check the box, thereby indicating that you would like your rating, review, and comments to be public,
+                        you are agreeing to be bound by the following terms, in addition the others appearing on this page:<br><br>"Your Content" refers to your name, location, product rating, comments, product review, and other information that you submit
+                        to us as part of forms on this website.<br><br>You are responsible for the entirety of Your Content, and once published, it may not always be able to be withdrawn. You assume all risks associated with Your Content and agree to
+                        hold
+                        <br>Fruitful Properties harmless in all situations that may arise pertaining to Your Content.<br><br>You grant us the right to publicly and privately use Your Content, in part and in whole, in any medium that we may choose. This
+                        may include, but is not limited to, including Your Content on our websites, social networks accounts, flyers, catalogs, images, videos, and emails. You also acknowledge that we may reformat Your Content, incorporate it into advertisements,
+                        create derivative works from it, distribute it, and allow others to do so on our behalf. You grant us irrevocable, world-wide, perpetual, non-exclusive, royalty-free, transferable rights to use Your Content, in part or in whole,
+                        for any purpose. We may or may not use Your Content and will decide whether to do so at our sole discretion. Submitting Your Content to us is no guarantee that it will used.<br><br>When displaying Your Content, we may elect to
+                        include your first name and last initial as was provided to us in your Your Content, EG: Jane D. We may also include the name of the state that you indicated in Your Content, depending on the medium in which we are displaying Your
+                        Content.
+                    </font>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+    <div data-silex-type="container" class="prevent-draggable container-element editable-style silex-id-1484590211530-22 section-element page-home paged-element" data-silex-id="silex-id-1484590211530-22">
+        <div data-silex-type="container" class="editable-style silex-element-content website-width silex-id-1484590211529-21 silex-container-content container-element prevent-draggable" data-silex-id="silex-id-1484590211529-21">
+
+
+
+
+
+
+        </div>
+        <div data-silex-type="html" class="editable-style silex-id-1517415711891-8 html-element silex-component silex-component-slideshow silex-use-height-not-minheight page-home paged-element" data-silex-id="silex-id-1517415711891-8" style="">
+            <div class="silex-element-content">
+                <div id="parent_1517426566638_375">
+                    <!-- preview -->
+                    <div class="prodotype-preview">
+
+                        <div class="preview-text prodotype-force-size">
+                            <p>~ Preview ~</p>
+                        </div>
+                        <figure class="slide-0">
+                            <div class="slide-image prodotype-force-size">
+
+                                <figcaption>Toners &amp; Cartridge</figcaption>
+
+                            </div>
+                        </figure>
+
+                    </div>
+                    <div id="id_1517426566638_375">
+                        <!-- runtime -->
+                        <!-- the whole slideshow -->
+                        <ul class="prodotype-runtime">
+
+                            <li>
+                                <figure class="slide-0">
+
+                                    <div class="slide-image">
+
+                                        <figcaption>Toners &amp; Cartridge</figcaption>
+
+                                    </div>
+
+                                </figure>
+                            </li>
+
+                            <li>
+                                <figure class="slide-1">
+
+                                    <div class="slide-image">
+
+                                        <figcaption>Technology Software and Hardware</figcaption>
+
+                                    </div>
+
+                                </figure>
+                            </li>
+
+                            <li>
+                                <figure class="slide-2">
+
+                                    <div class="slide-image">
+
+                                        <figcaption>Facility &amp; Breakroom</figcaption>
+
+                                    </div>
+
+                                </figure>
+                            </li>
+
+                            <li>
+                                <figure class="slide-3">
+
+                                    <div class="slide-image">
+
+                                        <figcaption>Furniture</figcaption>
+
+                                    </div>
+
+                                </figure>
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+                <style type="text/css">
+                    /* *********************** */
+                    /* "Preview" label always on top of the slideshow in silex */
+                    
+                    #parent_1517426566638_375 .prodotype-preview {
+                        list-style-type: none;
+                        margin: 0;
+                        padding: 0;
+                    }
+                    
+                    #parent_1517426566638_375 .prodotype-preview .preview-text {
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                    }
+                    
+                    #parent_1517426566638_375 .prodotype-preview .preview-text p {
+                        z-index: 1;
+                        background-color: black;
+                        color: white;
+                    }
+                    /* *********************** */
+                    /* styles for each slide */
+                    
+                    #parent_1517426566638_375 .slide-0 .slide-image {
+                        background-image: url('categories/t1.jpg');
+                    }
+                    
+                    #parent_1517426566638_375 .slide-1 .slide-image {
+                        background-image: url('categories/t2.jpg');
+                    }
+                    
+                    #parent_1517426566638_375 .slide-2 .slide-image {
+                        background-image: url('categories/t3.jpg');
+                    }
+                    
+                    #parent_1517426566638_375 .slide-3 .slide-image {
+                        background-image: url('categories/t4.jpg');
+                    }
+                    /* *********************** */
+                    /* styles for all the slides */
+                    
+                    #parent_1517426566638_375 .slide-image {
+                        width: 100%;
+                        display: flex;
+                        justify-content: center;
+                        background-repeat: no-repeat;
+                        background-size: cover;
+                        background-position: 50%;
+                        align-items: flex-end;
+                        justify-content: center;
+                    }
+                    
+                    #parent_1517426566638_375 figcaption {
+                        padding: 50px;
+                        color: white;
+                        background-color: rgba(0, 0, 0, 0.5);
+                        width: 100%;
+                        text-align: center;
+                    }
+                    /* *********************** */
+                    /* UI style */
+                    
+                    #parent_1517426566638_375 .unslider-nav {
+                        position: absolute;
+                        bottom: 10px;
+                        left: 0;
+                        right: 0;
+                        top: auto;
+                        margin: 0;
+                    }
+                    
+                    #parent_1517426566638_375 .unslider-nav ol {
+                        text-align: center;
+                    }
+                    
+                    #parent_1517426566638_375 .unslider-nav ol li.unslider-active {
+                        background: #fff;
+                        cursor: default;
+                        opacity: 1;
+                    }
+                    
+                    #parent_1517426566638_375 .unslider-nav ol li {
+                        display: inline-block;
+                        float: none;
+                        width: 6px;
+                        height: 6px;
+                        margin: 0 4px;
+                        padding: 3px;
+                        background: transparent;
+                        border-radius: 10px;
+                        overflow: hidden;
+                        text-indent: -999em;
+                        border: 2px solid #fff;
+                        cursor: pointer;
+                        opacity: .4;
+                    }
+                    
+                    #parent_1517426566638_375 .unslider-arrow {
+                        display: block;
+                        width: 32px;
+                        height: 32px;
+                        top: 50%;
+                        right: 16px;
+                        left: auto;
+                        margin-top: -16px;
+                        overflow: hidden;
+                        background: rgba(0, 0, 0, .2) no-repeat 50% 50%;
+                        background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAQCAQAAABuQZ3IAAAAi0lEQVR4AU3OISBEQQBAwS0AACS9NxqQgCZpkiYBVddFvWhAAUABAPQCAGC4g/0vTnrBqCfDIZl70J+kMUBPpEwT4FNXxBxz4F1HxHyr4EVTxBLb4EFNxEon4CJSlVNw9AcV9sC16h8osgke1P1ArgXwouVvdQq86ww/GQefusNf7kBviBlxpT8k+gL/Wox4r1d4MwAAAABJRU5ErkJggg==');
+                        background-size: 7px 11px;
+                        border-radius: 32px;
+                        text-indent: -999em;
+                        opacity: .6;
+                        transition: opacity .2s;
+                    }
+                    
+                    #parent_1517426566638_375 .unslider-arrow.prev {
+                        left: 16px;
+                        right: auto;
+                        -ms-transform: rotate(-180deg);
+                        transform: rotate(-180deg);
+                    }
+                    /* *********************** */
+                </style>
+                <script type="text/javascript">
+                    (function() {
+                        function initUnslider() {
+                          // do not start in the editor (it would mess with the markup)
+                          if(!$('body').hasClass('silex-runtime')) return;
+                    
+                          var slider = $('#id_1517426566638_375').unslider({
+                            'autoplay': true,
+                            'speed': 700,
+                            'delay': 3000,
+                            'index': 0,
+                            'nav': true,
+                            'animation': 'fade',
+                            'arrows': true
+                          });
+                          //  Listen to slide changes
+                          
+                          // apply element height to the images
+                          var silexElement = $('#id_1517426566638_375').closest('.editable-style');
+                          var elementMinHeight = silexElement.css('height');
+                          var elementWidth = silexElement.css('width');
+                          $('#id_1517426566638_375 li .slide-image').css({
+                            'height': elementMinHeight
+                          });
+                          
+                          // apply element height to the container (useful for fade only)
+                          $('#id_1517426566638_375 ul').css({
+                            'height': elementMinHeight
+                          });
+                          
+                      }
+                        initUnslider();
+                      })();
+                </script>
+            </div>
+        </div>
+    </div>
+    <div data-silex-type="container" class="prevent-draggable container-element editable-style silex-id-1484587463012-11 section-element fold page-home paged-element" data-silex-id="silex-id-1484587463012-11">
+        <div data-silex-type="container" class="editable-style silex-element-content website-width silex-id-1484587463012-10 silex-container-content container-element prevent-draggable" data-silex-id="silex-id-1484587463012-10">
+
+
+
+
+
+
+
+
+
+
+
+            <div data-silex-type="image" class="editable-style silex-id-1484589897940-17 image-element from-bottom page-home paged-element" data-silex-id="silex-id-1484589897940-17" style=""><img src="aaa-temp.jpg" class="silex-element-content"></div>
+            <div data-silex-type="text" class="editable-style silex-id-1484589600542-14 text-element page-home paged-element" data-silex-id="silex-id-1484589600542-14" style="">
+                <div class="silex-element-content normal">
+                    <h2 class="heading2">Choose your preferred brand</h2>
+                </div>
+            </div>
+            <div data-silex-type="text" class="editable-style text-element silex-id-1517419834899-9" data-silex-id="silex-id-1517419834899-9" style="">
+                <div class="silex-element-content normal">
+                    <h2 class="heading2">and get great deals and discounts<br></h2>
+                </div>
+            </div>
+            <div data-silex-type="text" class="editable-style text-element silex-id-1517419921416-10" data-silex-id="silex-id-1517419921416-10" style="">
+                <div class="silex-element-content normal">
+                    <h2 class="heading2">from our most in demand products.<br></h2>
+                </div>
+            </div>
+            <div data-silex-type="text" class="editable-style text-element silex-id-1517421413044-12" data-silex-id="silex-id-1517421413044-12" style="">
+                <div class="silex-element-content normal">
+                    <h2 class="heading2">Don't worry! We have our dedicated team and<br></h2>
+                </div>
+            </div>
+            <div data-silex-type="text" class="editable-style text-element silex-id-1517421443759-13" data-silex-id="silex-id-1517421443759-13" style="">
+                <div class="silex-element-content normal">
+                    <h2 class="heading2">We care and prioritize our customers satisfaction.<br></h2>
+                </div>
+            </div>
+            <div data-silex-type="text" class="editable-style text-element silex-id-1517421500036-14" data-silex-id="silex-id-1517421500036-14" style="">
+                <div class="silex-element-content normal"><i>
+                    </i>
+                    <h2 class="heading2"><i><span style="color: rgb(102, 102, 102);">Feeling Lost?</span><br></i></h2>
+                </div>
+            </div>
+            <div data-silex-type="text" class="editable-style text-element silex-id-1517421681021-15" data-silex-id="silex-id-1517421681021-15" style="">
+                <div class="silex-element-content normal">
+                    <h2 class="heading2">Specialist ready to answer your concerns,<br></h2>
+                </div>
+            </div>
+
+            <div data-silex-type="container" class="editable-style silex-id-1517424105657-17 container-element" data-silex-id="silex-id-1517424105657-17" style=""></div>
+        </div>
+    </div>
+
+    <div data-silex-type="container" class="prevent-draggable container-element editable-style silex-id-1484658633791-29 section-element page-home paged-element" data-silex-id="silex-id-1484658633791-29">
+        <div data-silex-type="container" class="editable-style silex-element-content website-width silex-id-1484658633790-28 silex-container-content container-element prevent-draggable" data-silex-id="silex-id-1484658633790-28">
+
+
+            <div data-silex-type="image" class="editable-style silex-id-1484658906426-31 image-element from-left" data-silex-id="silex-id-1484658906426-31" style=""><img src="gadgets.jpg" class="silex-element-content"></div>
+            <div data-silex-type="text" class="editable-style text-element silex-id-1484659675199-32 from-right" data-silex-id="silex-id-1484659675199-32" style="">
+                <div class="silex-element-content normal">
+                    <h2 class="heading2">Need a gadget to assist you in your works?<span style="line-height: 1.5;"></span></h2>
+                    <div>
+                        <font size="4"><span style="font-family: arial, sans-serif;">Own it now and let the technology do its job for you.</span></font><br></div>
+                </div>
+            </div>
+            <div data-silex-type="text" class="editable-style text-element silex-id-1484659675214-33 from-right" data-silex-id="silex-id-1484659675214-33" data-silex-href="tel:8009492717" style="">
+                <div class="silex-element-content normal">
+                    <br>
+                    <div style="text-align: center;"><span style="font-weight: lighter;">Give us a Call<br></span></div>
+                </div>
+            </div>
+            <div data-silex-type="image" class="editable-style silex-id-1484659915267-34 image-element from-right" data-silex-id="silex-id-1484659915267-34" style=""><img src="a4-copier-paper.jpeg" class="silex-element-content"></div>
+            <div data-silex-type="text" class="editable-style text-element silex-id-1484659957952-35 from-left" data-silex-id="silex-id-1484659957952-35" style="">
+                <div class="silex-element-content normal">
+                    <h2 class="heading2">We do provide product that suits for your copier &amp; printers.<br><span style="line-height: 1.5;"></span></h2>
+                    <div>
+                        <font size="4"><span style="font-family: arial, sans-serif;">Environmentally friendly paper<span style="color: rgb(0, 0, 0); font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;"> that has minimal pulp and papermaking emissions.</span></span>
+                        </font>
+                    </div>
+                </div>
+            </div>
+            <div data-silex-type="text" class="editable-style text-element silex-id-1484659957955-36 from-left" data-silex-id="silex-id-1484659957955-36" data-silex-href="tel:8009492717" style="">
+                <div class="silex-element-content normal">
+                    <br>
+                    <div style="text-align: center;"><span style="font-weight: lighter;">Give us a Call<br></span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div data-silex-type="container" class="prevent-draggable container-element editable-style silex-id-1484660025157-38 section-element bg-grad page-home paged-element" data-silex-id="silex-id-1484660025157-38">
+        <div data-silex-type="container" class="editable-style silex-element-content website-width silex-id-1484660025157-37 silex-container-content container-element prevent-draggable" data-silex-id="silex-id-1484660025157-37">
+
+
+
+
+
+
+            <div data-silex-type="text" class="editable-style silex-id-1484660819078-52 text-element from-left" data-silex-id="silex-id-1484660819078-52" style="">
+                <div class="silex-element-content normal"><span style="color: rgb(255, 255, 255);">
+                    </span>
+                    <h1 class="heading1"><span style="color: rgb(255, 255, 255);">
+                        Business Firewall<br>Cyber Protection<br></span>
+                    </h1><span style="color: rgb(255, 255, 255);">
+                    </span>
+                    <div>
+
+                        <h2 class="heading2"><span style="color: rgb(255, 255, 255);">Be safe by increasing your Internet facility Guard. <br></span></h2>
+                        <p class="normal"><span style="color: rgb(255, 255, 255);">You can increase your business efficiency by securing your network and systems.<br></span></p>
+                        <p class="normal"><span style="color: rgb(255, 255, 255);">Cyber Securities and Network Firewalls are part of a growing business,</span></p>
+                        <p class="normal"><span style="color: rgb(255, 255, 255);">So why risk your company and let those intruders steal your property?</span></p>
+                        <p class="normal"><span style="color: rgb(255, 255, 255);">Keep them away from your premises, Be secured and Be safe.<br></span></p>
+
+                    </div><span style="color: rgb(255, 255, 255);">
+                </span></div>
+            </div>
+            <div data-silex-type="text" class="editable-style text-element silex-id-1484661186677-53 from-left" data-silex-id="silex-id-1484661186677-53" style="" data-silex-href="tel:8009492717">
+                <div class="silex-element-content normal">
+                    <font color="#ffffff"><br>
+                    </font>
+                    <div style="text-align: center;"><span style="font-weight: lighter;"><font color="#ffffff">Give us a Call<br></font></span></div>
+                </div>
+            </div>
+            <div data-silex-type="image" class="editable-style silex-id-1484660331538-40 image-element from-right" data-silex-id="silex-id-1484660331538-40" style=""><img src="Business-Firewall.png" class="silex-element-content"></div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div data-silex-type="container" class="prevent-draggable container-element editable-style section-element silex-id-1517408522228-0 paged-element page-terms-and-conditions" data-silex-id="silex-id-1517408522228-0">
+
+        <div data-silex-type="container" class="editable-style silex-element-content website-width silex-container-content container-element prevent-draggable silex-id-1517408522228-1" data-silex-id="silex-id-1517408522228-1">
+
+
+
+
+
+
+            <div data-silex-type="image" class="editable-style image-element from-left page-privacy-policy paged-element silex-id-1517408522228-2" data-silex-id="silex-id-1517408522228-2" style=""><img src="LockIcon.png" class="silex-element-content"></div>
+            <div data-silex-type="text" class="editable-style text-element from-right page-cua paged-element silex-id-1517408522229-3" data-silex-id="silex-id-1517408522229-3" style="">
+                <div class="silex-element-content normal">
+                    <h1 class="page-heading" style="box-sizing: border-box; font-size: 29px; margin: 0px 0px 20px; font-weight: 500; line-height: 1.1; color: rgb(51, 51, 51); padding: 10px; background-color: rgb(245, 245, 245); border-bottom: 1px solid rgb(214, 212, 212); font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; letter-spacing: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-style: initial; text-decoration-color: initial;"><span style="font-family: arial, sans-serif;">Content Usage Agreement</span></h1>
+                    <h2 class="heading2"><span style="line-height: 1.5;"></span></h2>
+                    <font size="2">When filling out certain forms on this site, you may be asked whether you would like your rating/review/comments "to be public". If you check the box, thereby indicating that you would like your rating, review, and comments to be public,
+                        you are agreeing to be bound by the following terms, in addition the others appearing on this page:<br><br>"Your Content" refers to your name, location, product rating, comments, product review, and other information that you submit
+                        to us as part of forms on this website.<br><br>You are responsible for the entirety of Your Content, and once published, it may not always be able to be withdrawn. You assume all risks associated with Your Content and agree to
+                        hold
+                        <br>Fruitful Properties harmless in all situations that may arise pertaining to Your Content.<br><br>You grant us the right to publicly and privately use Your Content, in part and in whole, in any medium that we may choose. This
+                        may include, but is not limited to, including Your Content on our websites, social networks accounts, flyers, catalogs, images, videos, and emails. You also acknowledge that we may reformat Your Content, incorporate it into advertisements,
+                        create derivative works from it, distribute it, and allow others to do so on our behalf. You grant us irrevocable, world-wide, perpetual, non-exclusive, royalty-free, transferable rights to use Your Content, in part or in whole,
+                        for any purpose. We may or may not use Your Content and will decide whether to do so at our sole discretion. Submitting Your Content to us is no guarantee that it will used.<br><br>When displaying Your Content, we may elect to
+                        include your first name and last initial as was provided to us in your Your Content, EG: Jane D. We may also include the name of the state that you indicated in Your Content, depending on the medium in which we are displaying Your
+                        Content.
+                    </font>
+                </div>
+            </div>
+
+            <div data-silex-type="text" class="editable-style text-element from-right silex-id-1517408522231-4 page-terms-and-conditions paged-element" data-silex-id="silex-id-1517408522231-4" style="">
+                <div class="silex-element-content normal">
+                    <h1 class="page-heading" style="box-sizing: border-box; font-size: 29px; margin: 0px 0px 20px; font-weight: 500; line-height: 1.1; color: rgb(51, 51, 51); padding: 10px; background-color: rgb(245, 245, 245); border-bottom: 1px solid rgb(214, 212, 212); font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; letter-spacing: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-style: initial; text-decoration-color: initial;"><span style="font-family: arial, sans-serif;">Terms and conditions of use<span></span><br></span>
+                    </h1>
+                    <font size="2"><span style="font-family: arial, sans-serif;">This is the web site of AAA Office Supplies Inc. This agreement covers aaaofficesupplies.com as well as all of our associated web properties. Your use of this site or any of our associated web properties indicates your acceptance of these policies.<br><br>The term 'AAA Office Supplies Inc.' or 'us' or 'we' refers to the owner of the website whose registered office is 18915-142nd Ave. Ste. 155 Woodinville WA, 98072. The term 'you' refers to the user or viewer of our website.<br><br>If you continue to browse and use this website you are agreeing to comply with and be bound by the following terms and conditions of use, which together with our privacy policy and trademarks statement govern AAA Office Supplies Inc. relationship with you in relation to this website.<br><br>The information contained in this website is for general information purposes only. The information is provided by AAA Office Supplies Inc. and while we endeavour to keep the information up to date and correct, we make no representations or warranties of any kind, express or implied, about the completeness, accuracy, reliability, suitability or availability with respect to the website or the information, products, services, or related graphics contained on the website for any purpose. Any reliance you place on such information is therefore strictly at your own risk.<br><br>In no event will we be liable for any loss or damage including without limitation, indirect or consequential loss or damage, or any loss or damage whatsoever arising from loss of data or profits arising out of, or in connection with, the use of this website.<br><br>Through this website you are able to link to other websites which are not under the control of AAA Office Supplies Inc. We have no control over the nature, content and availability of those sites. The inclusion of any links does not necessarily imply a recommendation or endorse the views expressed within them.<br><br>Every effort is made to keep the website up and running smoothly. However, AAA Office Supplies Inc. takes no responsibility for, and will not be liable for, the website being temporarily unavailable.<br><br>Any redistribution or reproduction of part or all of the contents in any form is prohibited.<br><br>The use of this website is subject to the following terms of use:<br><br>1. The content of the pages of this website is for your general information only. It is subject to change without notice.<br><br>2. Neither we nor any third parties provide any warranty or guarantee as to the accuracy, timeliness, performance, completeness or suitability of the information and materials found or offered on this website for any particular purpose. You acknowledge that such information and materials may contain inaccuracies or errors and we expressly exclude liability for any such inaccuracies or errors to the fullest extent permitted by law.<br><br>3. Your use of any information or materials on this website is entirely at your own risk, for which we shall not be liable. It shall be your own responsibility to ensure that any products, services or information available through this website meet your specific requirements.<br><br>4. This website contains material which is owned by or licensed to us. This material includes, but is not limited to, the design, layout, look, appearance and graphics. Reproduction is prohibited other than in accordance with the copyright notice, which forms part of these terms and conditions.<br><br>5. Unauthorized use of this website may give rise to a claim for damages and/or be a criminal offense.<br><br>6. From time to time this website may also include links to other websites. These links are provided for your convenience to provide further information. They do not signify that we endorse the website(s). We have no responsibility for the content of the linked website(s).<br><br>7. You may not create a link to this website from another website or document without AAA Office Supplies Inc. prior written consent.<br><br>8. Your use of this website and any dispute arising out of such use of the website is subject to the laws of Woodinvill, Washington, and the United States of America.</span></font>
+                </div>
+            </div>
+            <div data-silex-type="image" class="editable-style image-element from-left silex-id-1517408959857-6 paged-element page-terms-and-conditions" data-silex-id="silex-id-1517408959857-6" style=""><img src="checklist-icon-350.png" class="silex-element-content"></div>
+        </div>
+    </div>
+    <div data-silex-type="container" class="prevent-draggable container-element editable-style section-element silex-id-1517253019317-26 paged-element page-privacy-policy" data-silex-id="silex-id-1517253019317-26">
+
+        <div data-silex-type="container" class="editable-style silex-element-content website-width silex-container-content container-element prevent-draggable silex-id-1517253019317-27" data-silex-id="silex-id-1517253019317-27">
+
+
+
+
+
+
+            <div data-silex-type="image" class="editable-style image-element from-left silex-id-1517253019317-28 page-privacy-policy paged-element" data-silex-id="silex-id-1517253019317-28" style=""><img src="LockIcon.png" class="silex-element-content"></div>
+            <div data-silex-type="text" class="editable-style text-element from-right page-cua paged-element silex-id-1517253019318-29" data-silex-id="silex-id-1517253019318-29" style="">
+                <div class="silex-element-content normal">
+                    <h1 class="page-heading" style="box-sizing: border-box; font-size: 29px; margin: 0px 0px 20px; font-weight: 500; line-height: 1.1; color: rgb(51, 51, 51); padding: 10px; background-color: rgb(245, 245, 245); border-bottom: 1px solid rgb(214, 212, 212); font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; letter-spacing: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-style: initial; text-decoration-color: initial;"><span style="font-family: arial, sans-serif;">Content Usage Agreement</span></h1>
+                    <h2 class="heading2"><span style="line-height: 1.5;"></span></h2>
+                    <font size="2">When filling out certain forms on this site, you may be asked whether you would like your rating/review/comments "to be public". If you check the box, thereby indicating that you would like your rating, review, and comments to be public,
+                        you are agreeing to be bound by the following terms, in addition the others appearing on this page:<br><br>"Your Content" refers to your name, location, product rating, comments, product review, and other information that you submit
+                        to us as part of forms on this website.<br><br>You are responsible for the entirety of Your Content, and once published, it may not always be able to be withdrawn. You assume all risks associated with Your Content and agree to
+                        hold
+                        <br>Fruitful Properties harmless in all situations that may arise pertaining to Your Content.<br><br>You grant us the right to publicly and privately use Your Content, in part and in whole, in any medium that we may choose. This
+                        may include, but is not limited to, including Your Content on our websites, social networks accounts, flyers, catalogs, images, videos, and emails. You also acknowledge that we may reformat Your Content, incorporate it into advertisements,
+                        create derivative works from it, distribute it, and allow others to do so on our behalf. You grant us irrevocable, world-wide, perpetual, non-exclusive, royalty-free, transferable rights to use Your Content, in part or in whole,
+                        for any purpose. We may or may not use Your Content and will decide whether to do so at our sole discretion. Submitting Your Content to us is no guarantee that it will used.<br><br>When displaying Your Content, we may elect to
+                        include your first name and last initial as was provided to us in your Your Content, EG: Jane D. We may also include the name of the state that you indicated in Your Content, depending on the medium in which we are displaying Your
+                        Content.
+                    </font>
+                </div>
+            </div>
+
+            <div data-silex-type="text" class="editable-style text-element from-right silex-id-1517253050286-30" data-silex-id="silex-id-1517253050286-30" style="">
+                <div class="silex-element-content normal">
+                    <h1 class="page-heading" style="box-sizing: border-box; font-size: 29px; margin: 0px 0px 20px; font-weight: 500; line-height: 1.1; color: rgb(51, 51, 51); padding: 10px; background-color: rgb(245, 245, 245); border-bottom: 1px solid rgb(214, 212, 212); font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; letter-spacing: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-style: initial; text-decoration-color: initial;"><span style="font-family: arial, sans-serif;">Privacy Policy</span></h1>
+                    <h2 class="heading2"><span style="line-height: 1.5;"></span></h2>
+                    <font size="2">This is the web site of AAA Office Supplies Inc. This agreement covers aaaofficesupplies.com as well as all of our associated web properties.<br><br>Your use of this site or any of our associated web properties indicates your acceptance
+                        of these policies.<br>Your privacy is important to us. We wish to earn your trust by observing the following policies.<br>We collect the e-mail addresses of those who post messages to our site, the e-mail addresses of those who
+                        communicate with us via e-mail, aggregate information on what pages consumers access or visit, information about the browser and IP address you may be accessing our site from, information volunteered by the consumer, such as survey
+                        information and/or site registrations, name and address, telephone number, fax number, payment information (e.g., credit card number and billing address).<br>The information we collect is used to improve the content of our web
+                        site, and is not shared with other organizations, except those organizations who are directly affiliated or contracted with AAA Office Supplies Inc.<br>With respect to cookies: We use cookies to store visitors preferences, record
+                        session information, such as items that consumers add to their shopping cart, record user-specific information on what pages users access or visit, record past activity at a site in order to provide better service when visitors
+                        return to our site. Information stored in cookies will never be made available to any third party individual or organizations for any reason.<br>If you do not want to receive e-mail from us in the future, please let us know by
+                        sending us e-mail, calling us, or writing to us using the information listed on our contact page.<br>If you supply us with your postal address online you will only receive the information for which you provided us your address.
+                        You may request that we stop mailing information to you by contacting us.
+                        <br>With respect to Ad Servers: We do not partner with or have special relationships with any ad server companies.<br>From time to time, we may use customer information for new, unanticipated uses not previously disclosed in our
+                        privacy notice. If our information practices change at some time in the future we will post the policy changes to our Web site to notify you of these changes. If you are concerned about how your information is used, you should
+                        check back at our Web site periodically.<br>For security reasons, we do not provide site visitors with access to information we have collected and that we maintain about them except to correct their profile information, such as
+                        mailing address, phone numbers, etc.
+                        <br>With respect to security: We have appropriate security measures in place in our physical facilities to protect against the loss, misuse or alteration of information that we have collected from you at our site. However, we will
+                        not be responsible for any lost, incorrect, or exposed data.<br>If you feel that this site is not following its stated information policy, you may contact us.</font>
+                </div>
+            </div>
+            <div data-silex-type="image" class="editable-style image-element from-left silex-id-1517408921880-5 page-terms-and-conditions paged-element" data-silex-id="silex-id-1517408921880-5" style=""><img src="LockIcon.png" class="silex-element-content"></div>
+        </div>
+    </div>
+
+    <div data-silex-type="container" class="prevent-draggable container-element editable-style section-element silex-id-1484662129693-59 page-home paged-element" data-silex-id="silex-id-1484662129693-59">
+
+        <div data-silex-type="container" class="editable-style silex-element-content website-width silex-container-content container-element prevent-draggable silex-id-1484662129693-60" data-silex-id="silex-id-1484662129693-60">
+
+
+
+
+
+
+
+            <div data-silex-type="text" class="editable-style text-element silex-id-1484662129693-61 from-right" data-silex-id="silex-id-1484662129693-61" style="">
+                <div class="silex-element-content normal">
+                    <p><span style="font-family: times\ new\ roman, serif;"><font size="6">MC Loredo</font><i><font size="4"><span style="line-height: 1.5;" class="normal"><font size="6"><br></font>Senior Account Manager</span></font>
+                        </i><br></span><span style="font-family: times\ new\ roman, serif;"><span style="font-family: times\ new\ roman, serif;">DDN: <a href="tel:4253544599">+1 (425) 354-4599</a></span><br>Ext: 383<br>Email: mcl@aaaofficesupplies.com</span>
+                    </p>
+                </div>
+            </div>
+
+            <div data-silex-type="text" class="editable-style text-element from-right silex-id-1517429870751-0" data-silex-id="silex-id-1517429870751-0" style="">
+                <div class="silex-element-content normal">
+                    <p><span style="font-family: times\ new\ roman, serif;"><font size="6">Jasmin Berangel</font><i><font size="4"><span style="line-height: 1.5;" class="normal"><font size="6"><br></font>Senior Account Manager</span></font>
+                        </i><br></span><span style="font-family: times\ new\ roman, serif;"><span style="font-family: times\ new\ roman, serif;">DDN: <a href="tel:4254096212">+1 (425) 409-6212</a></span><a href="tel:4254096212"><span style="font-family: times\ new\ roman, serif;"></span></a><br>Ext:
+                        304
+                        <br>Email: jasminb@aaaofficesupplies.com</span>
+                    </p>
+                </div>
+            </div>
+            <div data-silex-type="text" class="editable-style text-element silex-id-1517430051371-1" data-silex-id="silex-id-1517430051371-1" style="">
+                <div class="silex-element-content normal">
+                    <font size="6"><span style="font-family: arial, sans-serif;">Get help from our Specialist<br></span></font>
+                </div>
+            </div>
+            <div data-silex-type="image" class="editable-style silex-id-1517430432628-2 image-element" data-silex-id="silex-id-1517430432628-2" style=""><img src="contact-female.png" class="silex-element-content"></div>
+            <div data-silex-type="image" class="editable-style image-element silex-id-1517430456045-3" data-silex-id="silex-id-1517430456045-3" style=""><img src="contact-male.png" class="silex-element-content"></div>
+        </div>
+    </div>
+    <div data-silex-type="container" class="prevent-draggable container-element editable-style silex-id-1484661251321-55 section-element page-home paged-element" data-silex-id="silex-id-1484661251321-55">
+        <div data-silex-type="container" class="editable-style silex-element-content website-width silex-id-1484661251321-54 silex-container-content container-element prevent-draggable" data-silex-id="silex-id-1484661251321-54">
+
+            <div data-silex-type="html" class="editable-style silex-id-1517251452419-18 html-element" data-silex-id="silex-id-1517251452419-18" style="">
+                <div class="silex-element-content"><iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d292.4355323597556!2d-122.1512322759813!3d47.76265663767167!2m3!1f357.29999999999995!2f38.645218556679566!3f0!3m2!1i1024!2i768!4f35!3m3!1m2!1s0x54900e994f9244e9:0xf501387eb4bb643d!2s18915+142nd+Ave+NE,+Woodinville,+WA+98072,+USA!5e1!3m2!1sen!2sph!4v1517251962104"
+                        style="border:0" allowfullscreen="" data-silex-iframe-src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d292.4355323597556!2d-122.1512322759813!3d47.76265663767167!2m3!1f357.29999999999995!2f38.645218556679566!3f0!3m2!1i1024!2i768!4f35!3m3!1m2!1s0x54900e994f9244e9:0xf501387eb4bb643d!2s18915+142nd+Ave+NE,+Woodinville,+WA+98072,+USA!5e1!3m2!1sen!2sph!4v1517251962104"
+                        width="800" height="600" frameborder="0"></iframe></div>
+            </div>
+            <div data-silex-type="text" class="editable-style silex-id-1517252019236-19 text-element" data-silex-id="silex-id-1517252019236-19" style="">
+                <div class="silex-element-content normal"><span style="font-family: arial, sans-serif;"><font size="7">GET IN TOUCH<br></font></span></div>
+            </div>
+            <div data-silex-type="html" class="editable-style silex-id-1517252377183-25 html-element silex-component silex-component-form silex-use-height-not-minheight" data-silex-id="silex-id-1517252377183-25" style="">
+                <div class="silex-element-content">
+                    <form id="id_1517252426550_29" action="https://formspree.io/sales@aaaofficesupplies.com" method="POST">
+
+                        <div>
+                            <label for="field1">Name</label>
+                            <input required="" id="field1" name="field1" placeholder="Your name" type="text">
+                        </div>
+
+
+                        <div>
+                            <label for="field2">Your email adress</label>
+                            <input required="" id="field2" name="field2" placeholder="your@email.com" type="text">
+                        </div>
+
+
+                        <div class="fill-vertical">
+                            <label for="field3">Your message</label>
+                            <textarea required="" id="field3" name="field3" placeholder="What you have to say"></textarea>
+                        </div>
+
+                        <input value="Send" type="submit">
+                    </form>
+                    <style>
+                        #id_1517252426550_29 input[type=text],
+                        select {
+                            width: 100%;
+                            padding: 12px 20px;
+                            margin: 8px 0;
+                            display: inline-block;
+                            border: 1px solid #ccc;
+                            border-radius: 3px;
+                            box-sizing: border-box;
+                        }
+                        
+                        #id_1517252426550_29 input[type=submit] {
+                            width: 100%;
+                            background-color: #ff6262;
+                            color: #FFFFFF;
+                            padding: 14px 20px;
+                            margin: 8px 0;
+                            border: 1px solid #4caf50;
+                            border-radius: 3px;
+                            cursor: pointer;
+                        }
+                        
+                        #id_1517252426550_29 label {
+                            color: #000000;
+                        }
+                        /* *************************** */
+                        /* resize the 3rd field
+   and fill the vertical space */
+                        
+                        #id_1517252426550_29 .fill-vertical {
+                            flex: 1 1 auto;
+                            display: flex;
+                            flex-direction: column;
+                        }
+                        
+                        #id_1517252426550_29 .fill-vertical textarea {
+                            flex: 1 1 auto;
+                            width: 100%;
+                            height: 150px;
+                            padding: 12px 20px;
+                            box-sizing: border-box;
+                            border: 2px solid #ccc;
+                            border-radius: 3px;
+                            background-color: #f8f8f8;
+                            font-size: 16px;
+                            resize: none;
+                        }
+                        /* ************************ */
+                        
+                        #id_1517252426550_29 {
+                            border-radius: 3px;
+                            display: flex;
+                            flex-direction: column;
+                            justify-content: space-between;
+                            height: 100%;
+                        }
+                    </style>
+
+                </div>
+            </div>
+            <div data-silex-type="text" class="editable-style text-element silex-id-1517420430878-11 page-home paged-element" data-silex-id="silex-id-1517420430878-11" style="">
+                <div class="silex-element-content normal">
+                    <font size="5"><span style="font-family: arial, sans-serif;">Or give us a Call at: (800) 949-2717<br></span></font>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div data-silex-type="container" class="prevent-draggable container-element editable-style silex-id-1484662096460-58 section-element bg-grad2" data-silex-id="silex-id-1484662096460-58">
+        <div data-silex-type="container" class="editable-style silex-element-content website-width silex-id-1484662096459-57 silex-container-content container-element prevent-draggable" data-silex-id="silex-id-1484662096459-57">
+            <div data-silex-type="container" class="editable-style container-element silex-id-1484662183052-64" data-silex-id="silex-id-1484662183052-64" style="">
+
+
+
+
+
+
+                <div data-silex-type="text" class="editable-style text-element silex-id-1484662183053-65" data-silex-id="silex-id-1484662183053-65" style="">
+                    <div class="silex-element-content normal">
+                        <div style="text-align: left;">
+                            <font size="6"><span style="color: rgb(255, 255, 255);"></span><span style="color: rgb(255, 255, 255);">Store Information</span><br><span style="color: rgb(255, 255, 255);"></span><span style="color: rgb(255, 255, 255);"></span><span style="color: rgb(255, 255, 255);">
+                    </span></font>
+                        </div>
+                    </div>
+                </div>
+                <div data-silex-type="text" class="editable-style text-element silex-id-1517245757822-12" data-silex-id="silex-id-1517245757822-12" style="">
+                    <div class="silex-element-content normal">
+                        <div style="text-align: left;">
+                            <div style="text-align: left;"><span style="color: rgb(255, 255, 255);"><font size="6">Information Privacy</font></span><br></div>
+                            <div style="text-align: left;"><span style="color: rgb(255, 255, 255);"></span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div data-silex-type="text" class="editable-style text-element silex-id-1517246334547-15" data-silex-id="silex-id-1517246334547-15" style="">
+                    <div class="silex-element-content normal"><span style="color: rgb(255, 255, 255);"><span style="font-family: arial, sans-serif;"><b>AAA Office Supplies Inc.</b><br>18915-142ND AVE NE, STE 155<br></span>WOODINVILLE, WA 98072<br>+1 (800) 949-2717<br>sales@aaaofficesupplies.com<br></span>
+                    </div>
+                </div>
+                <div data-silex-type="text" class="editable-style text-element silex-id-1517424312388-18" data-silex-id="silex-id-1517424312388-18" style="">
+                    <div class="silex-element-content normal">
+                        <div style="text-align: center;">
+                            <font size="6"><span style="color: rgb(255, 255, 255);"></span><span style="color: rgb(255, 255, 255);">Links &amp; References</span><br><span style="color: rgb(255, 255, 255);"></span><span style="color: rgb(255, 255, 255);"></span>
+                                <span style="color: rgb(255, 255, 255);">
+                                    </span>
+                            </font>
+                        </div>
+                    </div>
+                </div>
+
+                <div data-silex-type="image" class="editable-style image-element silex-id-1517424543465-20" data-silex-id="silex-id-1517424543465-20" style="" data-silex-href="https://ph.linkedin.com/company/aaa-office-supplies-inc-"><img src="categories/linkedin.png" class="silex-element-content"></div>
+                <div data-silex-type="image" class="editable-style image-element silex-id-1517424678689-21" data-silex-id="silex-id-1517424678689-21" style="" data-silex-href="//government-contractors.insidegov.com/l/620652/Aaa-Office-Supplies-Incorporated"><img src="categories/insidegov.png" class="silex-element-content"></div>
+                <div data-silex-type="image" class="editable-style image-element silex-id-1517424844842-22" data-silex-id="silex-id-1517424844842-22" style="" data-silex-href="https://www.manta.com/c/mb4sr0g/aaa-office-supplies-incorporated"><img src="categories/manta.png" class="silex-element-content"></div>
+                <div data-silex-type="text" class="editable-style text-element silex-id-1517425442137-23" data-silex-id="silex-id-1517425442137-23" style="">
+                    <div class="silex-element-content normal"><span style="color: rgb(255, 255, 255);"><span style="font-family: arial, sans-serif;"><a href="https://www.aaaofficesupplies.com/#!page-cua">Content User Agreement</a><br><a href="https://www.aaaofficesupplies.com/#!page-privacy-policy">Privacy Policy</a><br></span>
+                        <a href="https://www.aaaofficesupplies.com/#!page-terms-and-agreement">Terms &amp; Agreement<br></a>
+                        <a href="https://www.aaaofficesupplies.com/#!page-terms-and-agreement"> </a>
+                        </span>
+                    </div>
+                </div>
+                <div data-silex-type="html" class="editable-style silex-id-1517426174305-0 html-element silex-component silex-component-share" data-silex-id="silex-id-1517426174305-0" style="">
+                    <div class="silex-element-content">
+                        <ul class="share-buttons" id="id_1517426257470_311">
+
+                            <li>
+                                <a href="https://www.facebook.com/sharer/sharer.php?u=https://www.aaaofficesupplies.com&amp;t=AAA%20Office%20Supplies%20Inc." title="Share on Facebook" target="_blank"><img alt="Share on Facebook" data-silex-static="" src="//editor.silex.me/static/2.7/simplesharingbuttons/simple_icons/Facebook.png"></a>
+                            </li>
+
+
+                            <li>
+                                <a href="https://twitter.com/intent/tweet?source=https://www.aaaofficesupplies.com&amp;text=AAA%20Office%20Supplies%20Inc.:%20https://www.aaaofficesupplies.com&amp;via=" target="_blank" title="Share on Twitter"><img alt="Twitt" data-silex-static="" src="//editor.silex.me/static/2.7/simplesharingbuttons/simple_icons/Twitter.png"></a>
+                            </li>
+
+
+                            <li>
+                                <a href="https://plus.google.com/share?url=https://www.aaaofficesupplies.com" target="_blank" title="Share on Google+"><img alt="Share on Google+" data-silex-static="" src="//editor.silex.me/static/2.7/simplesharingbuttons/simple_icons/Google%2B.png"></a>
+                            </li>
+
+
+                            <li>
+                                <a href="//www.tumblr.com/share?v=3&amp;u=https://www.aaaofficesupplies.com&amp;t=AAA%20Office%20Supplies%20Inc.&amp;s=" target="_blank" title="Post to Tumblr"><img alt="Post to Tumblr" data-silex-static="" src="//editor.silex.me/static/2.7/simplesharingbuttons/simple_icons/Tumblr.png"></a>
+                            </li>
+
+
+                            <li>
+                                <a href="//pinterest.com/pin/create/button/?url=https://www.aaaofficesupplies.com&amp;description=is%20a%20minority%20woman%20owned%20small%20business%20in%20Washington%0Aand%20we%20are%20focused%20on%20providing%20best%20customer%20experience%20we%20possibly%20can."
+                                    target="_blank" title="Pin it"><img alt="Pin it" data-silex-static="" src="//editor.silex.me/static/2.7/simplesharingbuttons/simple_icons/Pinterest.png"></a>
+                            </li>
+
+
+                            <li>
+                                <a href="https://getpocket.com/save?url=https://www.aaaofficesupplies.com&amp;title=AAA%20Office%20Supplies%20Inc." target="_blank" title="Add to Pocket"><img alt="Add to Pocket" data-silex-static="" src="//editor.silex.me/static/2.7/simplesharingbuttons/simple_icons/Pocket.png"></a>
+                            </li>
+
+
+                            <li>
+                                <a href="http://www.reddit.com/submit?url=https://www.aaaofficesupplies.com&amp;title=AAA%20Office%20Supplies%20Inc." target="_blank" title="Submit to Reddit"><img alt="Submit to Reddit" data-silex-static="" src="//editor.silex.me/static/2.7/simplesharingbuttons/simple_icons/Reddit.png"></a>
+                            </li>
+
+
+                            <li>
+                                <a href="http://www.linkedin.com/shareArticle?mini=true&amp;url=https://www.aaaofficesupplies.com&amp;title=AAA%20Office%20Supplies%20Inc.&amp;summary=is%20a%20minority%20woman%20owned%20small%20business%20in%20Washington%0Aand%20we%20are%20focused%20on%20providing%20best%20customer%20experience%20we%20possibly%20can.&amp;source=https://www.aaaofficesupplies.com%7B%20"
+                                    target="_blank" title="Share on LinkedIn"><img alt="Share on LinkedIn" data-silex-static="" src="//editor.silex.me/static/2.7/simplesharingbuttons/simple_icons/LinkedIn.png"></a>
+                            </li>
+
+
+                            <li>
+                                <a href="http://wordpress.com/press-this.php?u=https://www.aaaofficesupplies.com&amp;t=AAA%20Office%20Supplies%20Inc.&amp;s=is%20a%20minority%20woman%20owned%20small%20business%20in%20Washington%0Aand%20we%20are%20focused%20on%20providing%20best%20customer%20experience%20we%20possibly%20can."
+                                    target="_blank" title="Publish on WordPress"><img alt="Publish on WordPress" data-silex-static="" src="//editor.silex.me/static/2.7/simplesharingbuttons/simple_icons/Wordpress.png"></a>
+                            </li>
+
+
+                            <li>
+                                <a href="https://pinboard.in/popup_login/?url=https://www.aaaofficesupplies.com&amp;title=AAA%20Office%20Supplies%20Inc.&amp;description=is%20a%20minority%20woman%20owned%20small%20business%20in%20Washington%0Aand%20we%20are%20focused%20on%20providing%20best%20customer%20experience%20we%20possibly%20can."
+                                    target="_blank" title="Save to Pinboard"><img alt="Save to Pinboard" data-silex-static="" src="//editor.silex.me/static/2.7/simplesharingbuttons/simple_icons/Pinboard.png"></a>
+                            </li>
+
+
+                            <li>
+                                <a href="mailto:?subject=AAA%20Office%20Supplies%20Inc.&amp;body=is%20a%20minority%20woman%20owned%20small%20business%20in%20Washington%0Aand%20we%20are%20focused%20on%20providing%20best%20customer%20experience%20we%20possibly%20can.:%20https://www.aaaofficesupplies.com"
+                                    target="_blank" title="Send email"><img alt="Send by email" data-silex-static="" src="//editor.silex.me/static/2.7/simplesharingbuttons/simple_icons/Email.png"></a>
+                            </li>
+
+                        </ul>
+
+                        <style type="text/css">
+                            #id_1517426257470_311.share-buttons {
+                                list-style: none;
+                                padding: 0;
+                            }
+                            
+                            #id_1517426257470_311.share-buttons li {
+                                display: inline;
+                            }
+                            
+                            #id_1517426257470_311.share-buttons .sr-only {
+                                position: absolute;
+                                clip: rect(1px 1px 1px 1px);
+                                clip: rect(1px, 1px, 1px, 1px);
+                                padding: 0;
+                                border: 0;
+                                height: 1px;
+                                width: 1px;
+                                overflow: hidden;
+                            }
+                        </style>
+                    </div>
+                </div>
+                <div data-silex-type="text" class="editable-style text-element silex-id-1517426289424-1" data-silex-id="silex-id-1517426289424-1" style="">
+                    <div class="silex-element-content normal">
+                        <font size="4">
+                        </font>
+                        <div style="text-align: center;">
+                            <font size="4"><span style="color: rgb(255, 255, 255);"></span><span style="color: rgb(255, 255, 255);">Help us our Network to Grow</span><br><span style="color: rgb(255, 255, 255);"></span><span style="color: rgb(255, 255, 255);"></span></font>
+                            <font size="4"><span style="color: rgb(255, 255, 255);">
+                                    </span></font>
+
+                        </div>
+                        <font size="4">
+                        </font>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div data-silex-type="container" class="prevent-draggable container-element editable-style silex-id-1478366450713-3 section-element" data-silex-id="silex-id-1478366450713-3" style="">
+        <div data-silex-type="container" class="editable-style silex-element-content silex-id-1478366450713-2 silex-container-content container-element prevent-draggable website-width" data-silex-id="silex-id-1478366450713-2">
+
+
+            <div data-silex-id="silex-id-1442914737143-3" class="editable-style silex-id-1442914737143-3 text-element" data-silex-type="text" style="">
+                <div class="silex-element-content normal">
+                    <div style="text-align: center;" class="heading1">
+                        <p>
+                            <font size="2"><span style="color: rgb(255, 255, 255);"><font class="normal">2018 © AAA Office Supplies Inc., All Rights Reserved</font></span></font>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+
+</html>
